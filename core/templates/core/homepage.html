@@ -1,65 +1,89 @@
-{% extends 'core/base_public.html' %}
-{% load static %}
+<!doctype html>
+<html lang="en">
 
-{% block title %}PMS - Project Management Systems{% endblock %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Front Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+</head>
 
-{% block content %}
- <!-- Hero Section -->
-<section class="homepage-hero">  
-  <div class="container position-relative">
-    <h1 class="display-4 fw-bold">Project Management Systems</h1>
-    <p class="lead mt-3">
-      Organise your projects, manage tasks, and boost productivity with ease.
+<body>
+
+  <nav class="navbar navbar-expand-md sticky-top">
+    <h1 class="text-xl p-2 ms-4 text-white">PMS</h1>
+    <div class="ms-auto d-flex align-items-center hide-on-small">
+      <span class="text-xl p-2 me-4 text-white">Project Management Systems</span>
+    </div>
+  </nav>
+
+  <main>
+    <section class="homepage-hero">
+      <div class="container position-relative">
+        <h1 class="display-4 fw-bold">Project Management Systems</h1>
+        <p class="lead mt-3">
+          Organise your projects, manage tasks, and boost productivity with ease.
+        </p>
+        <div class="d-flex justify-content-center w-100">
+          <a href="register.html" class="btn same-size-btn btn-primary btn-lg me-3 mt-3">Login</a>
+          <a href="login.html" class="btn same-size-btn btn-primary btn-lg mt-3">Register</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section py-5">
+      <div class="container">
+        <div class="row g-4 text-center">
+
+          <div class="col-12 col-md-4">
+            <div class="features-box features-box-1">
+              <div class="features-content">
+                <h4>Project Tracking</h4>
+                <p>Create and manage multiple projects with timelines and goals. Create and manage multiple projects
+                  with timelines and goals.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="features-box features-box-2">
+              <div class="features-content">
+                <h4>Task Management</h4>
+                <p>Add, assign, and track tasks with status updates and deadlines. Add, assign, and track tasks with
+                  status updates and deadlines.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="features-box features-box-3">
+              <div class="features-content">
+                <h4>User-Friendly Interface</h4>
+                <p>Simple, clean design that works across all devices. Simple, clean design that works across all
+                  devices.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer d-flex flex-column flex-md-row justify-content-md-between align-items-center px-4 py-3">
+    <p class="mb-0 text-center text-md-start">&copy; 2025 Project Management Systems. All rights reserved.</p>
+    <p class="mb-0 text-center text-md-end mt-2 mt-md-0">
+      Contact us at: <a href="mailto:contact@pms.com" class="text-white">contact@pms.com</a>
     </p>
-    <div class="d-flex justify-content-center w-100">
-      <a href="{% url 'login' %}" class="btn same-size-btn btn-primary btn-lg me-3 mt-3">Login</a>
-      <a href="{% url 'register' %}" class="btn same-size-btn btn-primary btn-lg mt-3">Register</a>
-    </div>
-  </div>
-</section>
+  </footer>
 
-  <!-- Features Section -->
-<section class="features-section py-5">
-  <div class="container">
-    <div class="row g-4 text-center">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/create-project.js"></script>
 
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="features-box features-box-1">
-          <div class="features-content">
-            <h4>Project Tracking</h4>
-            <p>Create and manage multiple projects with timelines and goals. Create and manage multiple projects with timelines and goals.</p>
-          </div>
-        </div>
-      </div>
+</body>
 
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="features-box features-box-2">
-          <div class="features-content">
-            <h4>Task Management</h4>
-            <p>Add, assign, and track tasks with status updates and deadlines. Add, assign, and track tasks with status updates and deadlines.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="features-box features-box-3">
-          <div class="features-content">
-            <h4>User-Friendly Interface</h4>
-            <p>Simple, clean design that works across all devices. Simple, clean design that works across all devices.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="features-box features-box-3">
-          <div class="features-content">
-            <h4>User-Friendly Interface</h4>
-            <p>Simple, clean design that works across all devices. Simple, clean design that works across all devices.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-{% endblock %}
+</html>
