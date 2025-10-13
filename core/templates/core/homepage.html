@@ -1,0 +1,65 @@
+{% extends 'core/base_public.html' %}
+{% load static %}
+
+{% block title %}PMS - Project Management Systems{% endblock %}
+
+{% block content %}
+ <!-- Hero Section -->
+<section class="homepage-hero">  
+  <div class="container position-relative">
+    <h1 class="display-4 fw-bold">Project Management Systems</h1>
+    <p class="lead mt-3">
+      Organise your projects, manage tasks, and boost productivity with ease.
+    </p>
+    <div class="d-flex justify-content-center w-100">
+      <a href="{% url 'login' %}" class="btn same-size-btn btn-primary btn-lg me-3 mt-3">Login</a>
+      <a href="{% url 'register' %}" class="btn same-size-btn btn-primary btn-lg mt-3">Register</a>
+    </div>
+  </div>
+</section>
+
+  <!-- Features Section -->
+<section class="features-section py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-1">
+          <div class="features-content">
+            <h4>Project Tracking</h4>
+            <p>Create and manage multiple projects with timelines and goals. Create and manage multiple projects with timelines and goals.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-2">
+          <div class="features-content">
+            <h4>Task Management</h4>
+            <p>Add, assign, and track tasks with status updates and deadlines. Add, assign, and track tasks with status updates and deadlines.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-3">
+          <div class="features-content">
+            <h4>User-Friendly Interface</h4>
+            <p>Simple, clean design that works across all devices. Simple, clean design that works across all devices.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-3">
+          <div class="features-content">
+            <h4>User-Friendly Interface</h4>
+            <p>Simple, clean design that works across all devices. Simple, clean design that works across all devices.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
