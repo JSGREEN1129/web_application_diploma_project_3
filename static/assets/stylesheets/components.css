@@ -1,0 +1,14 @@
+/* Components stylesheet */
+
+
+/* Primary bootstrap buttons styles modified for better suitability */
+
+.btn-primary {
+    background-color: #000080; /* Colour change */
+    border-color: #000080; /* Border colour change */
+}
+
+.btn-primary:hover {
+    background-color: #0018f9; /* Darker shade on hover */
+}
+

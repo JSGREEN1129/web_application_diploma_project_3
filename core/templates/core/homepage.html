@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 
@@ -6,10 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Front Page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="stylesheet" href=static\assets\stylesheets\base.css>
+  <link rel="stylesheet" href="static\assets\stylesheets\homepage.css">
+  <link rel="stylesheet" href=static\assets\stylesheets\components.css>
+  <link rel="apple-touch-icon" sizes="180x180" href=static\assets\favicon\apple-touch-icon.png>
+  <link rel="icon" type="image/png" sizes="32x32" href=static\assets\favicon\favicon-32x32.png>
+  <link rel="icon" type="image/png" sizes="16x16" href=static\assets\favicon\favicon-16x16.png>
 </head>
 
 <body>
@@ -28,9 +32,9 @@
         <p class="lead mt-3">
           Organise your projects, manage tasks, and boost productivity with ease.
         </p>
-        <div class="d-flex justify-content-center w-100">
-          <a href="register.html" class="btn same-size-btn btn-primary btn-lg me-3 mt-3">Login</a>
-          <a href="login.html" class="btn same-size-btn btn-primary btn-lg mt-3">Register</a>
+        <div class="d-flex justify-content-center w-100 gap-3 mt-5">
+          <a href="register.html" class="btn same-size-btn btn-primary btn-lg">Login</a>
+          <a href="login.html" class="btn same-size-btn btn-primary btn-lg">Register</a>
         </div>
       </div>
     </section>
@@ -39,32 +43,39 @@
       <div class="container">
         <div class="row g-4 text-center">
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6 col-lg-3">
             <div class="features-box features-box-1">
               <div class="features-content">
                 <h4>Project Tracking</h4>
-                <p>Create and manage multiple projects with timelines and goals. Create and manage multiple projects
-                  with timelines and goals.</p>
+                <p>Create and manage multiple projects with timelines and status tracking. Stay organized by associating project-specific tasks and tracking individual task status. 
+                   Track end dates and ensure every project stays on schedule and within scope.</p>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6 col-lg-3">
             <div class="features-box features-box-2">
               <div class="features-content">
                 <h4>Task Management</h4>
-                <p>Add, assign, and track tasks with status updates and deadlines. Add, assign, and track tasks with
-                  status updates and deadlines.</p>
+                <p>Add, assign, and track tasks with status updates and deadlines. Monitor progress through real-time updates, adjust deadlines when needed, and ensure accountability at every stage of the workflow.</p>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6 col-lg-3">
             <div class="features-box features-box-3">
               <div class="features-content">
-                <h4>User-Friendly Interface</h4>
-                <p>Simple, clean design that works across all devices. Simple, clean design that works across all
-                  devices.</p>
+                <h4>User-Friendly</h4>
+                <p>Navigate effortlessly with an intuitive layout optimised for desktops, tablets, and mobile phones. Enjoy a seamless user experience with responsive elements, accessible controls, and a clutter-free interface that enhances productivity.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="features-box features-box-4">
+              <div class="features-content">
+                <h4>Secure and Reliable</h4>
+                <p>Protect your data with robust security measures and encrypted connections. The app is built with best practices in authentication and access control to ensure that your projects and tasks remain safe.</p>
               </div>
             </div>
           </div>
@@ -82,7 +93,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/create-project.js"></script>
 
 </body>
 
