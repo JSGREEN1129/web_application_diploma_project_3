@@ -1,31 +1,9 @@
+{% extends 'core/base_public.html' %}
 {% load static %}
 
-<!doctype html>
-<html lang="en">
+{% block title %}PMS - Project Management Systems{% endblock %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Front Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href=static\assets\stylesheets\base.css>
-  <link rel="stylesheet" href="static\assets\stylesheets\homepage.css">
-  <link rel="stylesheet" href=static\assets\stylesheets\components.css>
-  <link rel="apple-touch-icon" sizes="180x180" href=static\assets\favicon\apple-touch-icon.png>
-  <link rel="icon" type="image/png" sizes="32x32" href=static\assets\favicon\favicon-32x32.png>
-  <link rel="icon" type="image/png" sizes="16x16" href=static\assets\favicon\favicon-16x16.png>
-</head>
-
-<body>
-
-  <nav class="navbar navbar-expand-md sticky-top">
-    <h1 class="text-xl p-2 ms-4 text-white">PMS</h1>
-    <div class="ms-auto d-flex align-items-center hide-on-small">
-      <span class="text-xl p-2 me-4 text-white">Project Management Systems</span>
-    </div>
-  </nav>
-
-  <main>
+{% block content %}
     <section class="homepage-hero">
       <div class="container position-relative">
         <h1 class="display-4 fw-bold">Project Management Systems</h1>
@@ -33,8 +11,8 @@
           Organise your projects, manage tasks, and boost productivity with ease.
         </p>
         <div class="d-flex justify-content-center w-100 gap-3 mt-5">
-          <a href="register.html" class="btn same-size-btn btn-primary btn-lg">Login</a>
-          <a href="login.html" class="btn same-size-btn btn-primary btn-lg">Register</a>
+          <a href="{% url 'login' %}" class="btn same-size-btn btn-primary btn-lg">Login</a>
+          <a href="{% url 'register' %}" class="btn same-size-btn btn-primary btn-lg">Register</a>
         </div>
       </div>
     </section>
@@ -83,17 +61,4 @@
         </div>
       </div>
     </section>
-  </main>
-
-  <footer class="footer d-flex flex-column flex-md-row justify-content-md-between align-items-center px-4 py-3">
-    <p class="mb-0 text-center text-md-start">&copy; 2025 Project Management Systems. All rights reserved.</p>
-    <p class="mb-0 text-center text-md-end mt-2 mt-md-0">
-      Contact us at: <a href="mailto:contact@pms.com" class="text-white">contact@pms.com</a>
-    </p>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>
+{% endblock %}
