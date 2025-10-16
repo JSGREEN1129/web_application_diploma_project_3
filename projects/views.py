@@ -92,25 +92,19 @@ def project_detail(request, project_id):
 @never_cache
 def project_edit(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
+    redirect_to = request.GET.get('next', reverse('project_detail', kwargs={'project_id': project.id}))
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
-        password = request.POST.get("password")
-
-        if not request.user.check_password(password):
-            messages.error(request, "Incorrect password. Changes not saved.")
-        elif form.is_valid():
-            form.save()
-            messages.success(
-                request, f"Project '{project.name}' updated successfully!")
-            return redirect("project_list")
+        if form.is_valid():
+            project = form.save()
+            messages.success(request, f"Project '{project.name}' updated successfully!")
+            return redirect(redirect_to)
     else:
         form = ProjectForm(instance=project)
 
-    return render(
-        request, "projects/project_edit.html", {
-            "form": form, "project": project}
-    )
+    return render(request, 'projects/project_edit.html', {'form': form, 'project': project, 'next': redirect_to})
+
 
 @login_required
 @never_cache

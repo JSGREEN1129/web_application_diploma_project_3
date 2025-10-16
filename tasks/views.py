@@ -52,24 +52,21 @@ def task_edit(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
     project = task.project
 
+    redirect_to = request.GET.get('next', reverse('project_detail', kwargs={'project_id': project.id}))
+
     if request.method == 'POST':
         form = TaskEditForm(request.POST, instance=task)
         if form.is_valid():
             task = form.save(commit=False)
             task.check_status()
             task.save()
-            messages.success(
-                request, f"Task '{task.name}' updated successfully!")
-            return redirect('project_detail', project_id=project.id)
+            messages.success(request, f"Task '{task.name}' updated successfully!")
+            return redirect(redirect_to)
     else:
         form = TaskEditForm(instance=task)
 
-    context = {
-        'form': form,
-        'task': task,
-        'project': project,
-    }
-    return render(request, 'tasks/task_edit.html', context)
+    return render(request, 'tasks/task_edit.html', {'form': form, 'task': task, 'project': project, 'next': redirect_to})
+
 
 @login_required
 @never_cache
