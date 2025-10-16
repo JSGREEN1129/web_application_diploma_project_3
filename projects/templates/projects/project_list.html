@@ -109,7 +109,7 @@
           </div>
         </div>
         {% if project.status == 'open' %}
-        <a href="{% url 'project_toggle_complete' project.id %}" class="btn btn-sm only-top-border success mt-3">Mark as
+        <a href="{% url 'project_toggle_complete' project.id %}" class="btn btn-sm only-top-border success mt-4">Mark as
           Completed</a>
         {% else %}
         <a href="{% url 'project_toggle_complete' project.id %}"
@@ -123,13 +123,5 @@
     {% endif %}
   </div>
 </div>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const errorProjectId = "{{ error_project_id|default:'' }}";
-    if (errorProjectId) {
-      const modal = new bootstrap.Modal(document.getElementById('deleteProjectModal' + errorProjectId));
-      modal.show();
-    }
-  });
-</script>
+
 {% endblock %}

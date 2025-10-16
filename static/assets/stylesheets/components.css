@@ -49,13 +49,28 @@ h4 {
     background-color: #820101;
     /* Colour change */
     border-color: #820101;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary:focus:hover {
     background-color: #d60000;
     /* Lighter shade on hover */
     border-color: #d60000;
 }
+
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary.focus {
+    background-color: #820101;
+    border-color: #820101;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
+}
+
 
 .btn-edit {
     background-color: #995414;
