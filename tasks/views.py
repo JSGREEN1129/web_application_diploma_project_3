@@ -1,3 +1,73 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
+from django.contrib import messages
+from django.urls import reverse
+from django.utils.http import urlencode
+from django.contrib.auth.hashers import check_password
 
-# Create your views here.
+from .models import Task
+from .forms import TaskForm, TaskEditForm
+from projects.models import Project
+
+
+@login_required
+@never_cache
+def task_create(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.project = project
+            task.save()
+            task.check_status()
+            messages.success(
+                request, f"Task '{task.name}' created successfully!")
+            return redirect('project_detail', project_id=project.id)
+    else:
+        form = TaskForm()
+
+    return render(request, 'tasks/task_create.html', {'form': form, 'project': project})
+
+@login_required
+@never_cache
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, id=task_id, project__owner=request.user)
+
+    task.check_status()
+
+    error_task_id = request.GET.get('error_task_id', '')
+
+    return render(request, 'tasks/task_detail.html', {
+        'task': task,
+        'error_task_id': error_task_id,
+    })
+
+
+@login_required
+@never_cache
+def task_edit(request, task_id):
+    task = get_object_or_404(Task, id=task_id, project__owner=request.user)
+    project = task.project
+
+    if request.method == 'POST':
+        form = TaskEditForm(request.POST, instance=task)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.check_status()
+            task.save()
+            messages.success(
+                request, f"Task '{task.name}' updated successfully!")
+            return redirect('project_detail', project_id=project.id)
+    else:
+        form = TaskEditForm(instance=task)
+
+    context = {
+        'form': form,
+        'task': task,
+        'project': project,
+    }
+    return render(request, 'tasks/task_edit.html', context)
+
