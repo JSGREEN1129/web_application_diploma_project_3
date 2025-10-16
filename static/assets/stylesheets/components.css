@@ -23,9 +23,23 @@ h4 {
     color: #000080;
 }
 
+.description-text {
+    font-size: 1.0rem;
+    color: #000080;
+
+}
+
 .card-text {
     font-size: 1.0rem;
     color: #000080;
+}
+
+.task-description p {
+    font-size: 1.0rem;
+    color: #000080;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Bootstrap buttons styles modified for better suitability */
@@ -82,6 +96,20 @@ h4 {
     background-color: #e3730b;
     border-color: #e3730b;
     color: #ffffff;
+
+}
+
+.btn-confirm-close {
+    background-color: #3b9333; /* Primary button color */
+    border-color: #3b9333;
+    color:#ffffff;
+
+}
+
+.btn-confirm-close:hover {
+    background-color: #43c936; /* Primary button color */
+    border-color: #43c936;
+    color:#ffffff;
 
 }
 

@@ -7,6 +7,27 @@
 {% block content %}
 <div class="container my-4">
     <h2 class="mb-4">{{ project.name }} (ID: {{ project.id }})</h2>
+    {% if project.description %}
+        <p id="descriptionPreview" class="description-text">
+            {{ project.description|truncatechars:150|linebreaksbr }}
+            {% if project.description|length > 150 %}
+                ... <a id="toggleDescription" 
+                       data-bs-toggle="collapse" 
+                       href="#fullDescription" 
+                       role="button" 
+                       aria-expanded="false" 
+                       aria-controls="fullDescription">
+                    Expand
+                </a>
+            {% endif %}
+        </p>
+
+        {% if project.description|length > 150 %}
+            <div class="collapse mt-2" id="fullDescription">
+                <p class="description-text">{{ project.description|linebreaksbr }}</p>
+            </div>
+        {% endif %}
+    {% endif %}
 
     {% if project.status == "open" %}
     <span class="badge bg-success mb-3">Open</span>
@@ -21,25 +42,6 @@
         <p class="mb-1 text-danger">⚠ Overdue: {{ project.overdue_count }}</p>
     </div>
 
-    {% if project.description %}
-    <p id="descriptionPreview">
-        {{ project.description|truncatechars:150|linebreaks }}
-        {% if project.description|length > 150 %}
-        ... <a id="toggleDescription" data-bs-toggle="collapse" href="#fullDescription" role="button"
-            aria-expanded="false" aria-controls="fullDescription">
-            Expand
-        </a>
-        {% endif %}
-    </p>
-
-    {% if project.description|length > 150 %}
-    <div class="collapse mt-2" id="fullDescription">
-        <p>{{ project.description|linebreaks }}</p>
-    </div>
-    {% endif %}
-    {% endif %}
-
-
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <a href="{% url 'task_create' project.id %}" class="btn btn-primary">+ Add Task</a>
         <a href="{% url 'project_detail' project.id %}?status=all"
@@ -50,6 +52,45 @@
             class="btn btn-primary {% if status_filter == 'outstanding' %}active{% endif %}">Outstanding</a>
         <a href="{% url 'project_detail' project.id %}?status=overdue"
             class="btn btn-primary {% if status_filter == 'overdue' %}active{% endif %}">Overdue</a>
+        <a href="{% url 'project_edit' project.id %}?next={% url 'project_detail' project.id %}" class="btn btn-edit">Edit Project</a>
+        <!-- Delete Button triggers modal -->
+          <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+            data-bs-target="#deleteProjectModal{{ project.id }}">
+            Delete
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1"
+            aria-labelledby="deleteProjectModalLabel{{ project.id }}" {% if error_project_id == project.id %}
+            aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
+            <div class="modal-dialog">
+              <form method="POST" action="{% url 'project_confirm_delete' project.id %}">
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteProjectModalLabel{{ project.id }}">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>To delete this project, please enter your password:</p>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password"
+                      required>
+
+                    {% if error_project_id|default:'' == project.id|stringformat:"s" %}
+                    <div class="alert alert-danger mt-3" role="alert">
+                      Incorrect password. Project was not deleted.
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete Project</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+        </div>
+
         <a href="{% url 'project_list' %}" class="btn btn-primary">← Back to Projects</a>
     </div>
 
@@ -107,10 +148,10 @@
                 </div>
 
                 <div class="card-footer bg-transparent border-top-0 d-flex gap-2 flex-wrap">
-                    <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
-                    <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                    <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-primary">View Details</a>
+                    <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-edit">Edit</a>
 
-                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#deleteTaskModal{{ task.id }}">
                         Delete
                     </button>
