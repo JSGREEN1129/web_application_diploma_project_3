@@ -1,7 +1,29 @@
 /* Components stylesheet */
 
 
-/* Primary bootstrap buttons styles modified for better suitability */
+/* Bootstrap header and paragraph styles modified for better suitability */
+
+h2 {
+    font-size: 3rem;
+    color: #000080;
+    font-weight: 600;
+}
+
+h3 {
+    color: #000080;
+    font-weight: 600; 
+}
+
+h4 {
+    color: #ffffff;
+}
+
+.project_list_header_p {
+    font-size: 1.4rem; 
+    color: #000080;
+}
+
+/* Bootstrap buttons styles modified for better suitability */
 
 .btn-primary {
     background-color: #000080; /* Colour change */
@@ -9,6 +31,16 @@
 }
 
 .btn-primary:hover {
-    background-color: #0018f9; /* Darker shade on hover */
+    background-color: #0018f9; /* Lighter shade on hover */
 }
 
+.btn-secondary {
+  background-color: #820101; /* Colour change */
+  border-color: #820101;
+  color: #f7f7f7;
+}
+
+.btn-secondary:hover {
+  background-color: #d60000; /* Lighter shade on hover */
+  border-color: #d60000;
+}

@@ -11,9 +11,9 @@
 
   <!-- Messages -->
   {% if messages %}
-    <div class="mb-3">
-      {% for message in messages %}
-      <div class="alert 
+  <div class="mb-3">
+    {% for message in messages %}
+    <div class="alert 
         {% if message.tags %}alert-{{ message.tags }}
         {% elif message.level == 40 %}alert-danger
         {% elif message.level == 25 %}alert-success
@@ -23,108 +23,108 @@
         {% else %}alert-secondary
         {% endif %}
         alert-dismissible fade show" role="alert">
-        
-        <strong>{{ message }}</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
+
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    {% endfor %}
+  </div>
   {% endif %}
 
   <!-- Action Buttons -->
   <div class="mb-4 d-flex gap-2 flex-wrap">
     <a href="{% url 'project_create' %}" class="btn btn-primary">+ New Project</a>
     <a href="?status=open" class="btn btn-primary {% if status_filter == 'open' %}active{% endif %}">⚇ Open Projects</a>
-    <a href="?status=closed" class="btn btn-primary {% if status_filter == 'closed' %}active{% endif %}">⚉ Closed Projects</a>
+    <a href="?status=closed" class="btn btn-primary {% if status_filter == 'closed' %}active{% endif %}">⚉ Closed
+      Projects</a>
     <a href="?status=all" class="btn btn-primary {% if status_filter == 'all' %}active{% endif %}">All Projects</a>
   </div>
 
   <!-- Projects Grid -->
   <div class="row">
     {% if projects %}
-      {% for project in projects %}
-        <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card h-100 border-primary">
-            <div class="card-body">
-              <h3 class="card-title">{{ project.name }} (ID: {{ project.id }})</h3>
-               <p class="card-text">
+    {% for project in projects %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card h-100 border-primary">
+        <div class="card-body">
+          <h3 class="card-title">{{ project.name }} (ID: {{ project.id }})</h3>
+          <p class="card-text">
             {{ project.description|default:"No description"|truncatechars:100 }}
-            </p>
-              <!-- Status Badge -->
-              {% if project.status == "open" %}
-                <span class="badge bg-success mb-3">Open</span>
-              {% elif project.status == "closed" %}
-                <span class="badge bg-secondary mb-3">Closed</span>
-              {% endif %}
-
-              <!-- Task Stats -->
-              <div class="small text-muted">
-                <p class="mb-1 tasks-total"><strong>Tasks:</strong> {{ project.total_tasks }} total</p>
-                <p class="mb-1 tasks-text-completed">✔ Completed: {{ project.completed_count }}</p>
-                <p class="mb-1 tasks-text-outstanding">⏳ Outstanding: {{ project.outstanding_count }}</p>
-                <p class="mb-1 text-danger">⚠ Overdue: {{ project.overdue_count }}</p>
-              </div>
-            </div>
-
-            <div class="card-footer bg-transparent border-top-0">
-              <a href="{% url 'project_detail' project.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
-              <a href="{% url 'project_edit' project.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
-              <!-- Delete Button triggers modal -->
-<button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal{{ project.id }}">
-  Delete
-</button>
-
-<!-- Modal -->
-<div class="modal fade" 
-     id="deleteProjectModal{{ project.id }}" tabindex="-1" 
-     aria-labelledby="deleteProjectModalLabel{{ project.id }}"
-     {% if error_project_id == project.id %}
-       aria-modal="true" role="dialog"
-     {% else %}
-       aria-hidden="true"
-     {% endif %}>
-  <div class="modal-dialog">
-    <form method="POST" action="{% url 'project_confirm_delete' project.id %}">
-      {% csrf_token %}
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-danger" id="deleteProjectModalLabel{{ project.id }}">Confirm Delete</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>To delete this project, please enter your password:</p>
-          <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
-
-          {% if error_project_id|default:'' == project.id|stringformat:"s" %}
-  <div class="alert alert-danger mt-3" role="alert">
-    Incorrect password. Project was not deleted.
-  </div>
+          </p>
+          <!-- Status Badge -->
+          {% if project.status == "open" %}
+          <span class="badge bg-success mb-3">Open</span>
+          {% elif project.status == "closed" %}
+          <span class="badge bg-secondary mb-3">Closed</span>
           {% endif %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-danger">Delete Project</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-            </div>
-              {% if project.status == 'open' %}
-    <a href="{% url 'project_toggle_complete' project.id %}" class="btn btn-sm only-top-border success mt-3">Mark as Completed</a>
-{% else %}
-    <a href="{% url 'project_toggle_complete' project.id %}" class="btn btn-sm only-top-border secondary mt-4">Re-open Project</a>
-{% endif %}
+
+          <!-- Task Stats -->
+          <div class="small text-muted">
+            <p class="mb-1 tasks-total"><strong>Tasks:</strong> {{ project.total_tasks }} total</p>
+            <p class="mb-1 tasks-text-completed">✔ Completed: {{ project.completed_count }}</p>
+            <p class="mb-1 tasks-text-outstanding">⏳ Outstanding: {{ project.outstanding_count }}</p>
+            <p class="mb-1 text-danger">⚠ Overdue: {{ project.overdue_count }}</p>
           </div>
         </div>
-      {% endfor %}
+
+        <div class="card-footer bg-transparent border-top-0">
+          <a href="{% url 'project_detail' project.id %}" class="btn btn-sm btn-outline-primary">View Details</a>
+          <a href="{% url 'project_edit' project.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+          <!-- Delete Button triggers modal -->
+          <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+            data-bs-target="#deleteProjectModal{{ project.id }}">
+            Delete
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1"
+            aria-labelledby="deleteProjectModalLabel{{ project.id }}" {% if error_project_id==project.id %}
+            aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
+            <div class="modal-dialog">
+              <form method="POST" action="{% url 'project_confirm_delete' project.id %}">
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteProjectModalLabel{{ project.id }}">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>To delete this project, please enter your password:</p>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password"
+                      required>
+
+                    {% if error_project_id|default:'' == project.id|stringformat:"s" %}
+                    <div class="alert alert-danger mt-3" role="alert">
+                      Incorrect password. Project was not deleted.
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete Project</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% if project.status == 'open' %}
+        <a href="{% url 'project_toggle_complete' project.id %}" class="btn btn-sm only-top-border success mt-3">Mark as
+          Completed</a>
+        {% else %}
+        <a href="{% url 'project_toggle_complete' project.id %}"
+          class="btn btn-sm only-top-border secondary mt-4">Re-open Project</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
     {% else %}
-      <p class="text-muted">You have no projects yet. Click "Create Project" to add one!</p>
+    <p class="text-muted">You have no projects yet. Click "Create Project" to add one!</p>
     {% endif %}
   </div>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     const errorProjectId = "{{ error_project_id|default:'' }}";
     if (errorProjectId) {
       const modal = new bootstrap.Modal(document.getElementById('deleteProjectModal' + errorProjectId));
@@ -133,4 +133,3 @@
   });
 </script>
 {% endblock %}
-
