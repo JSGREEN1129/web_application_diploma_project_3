@@ -1,0 +1,45 @@
+{% extends 'core/base_users.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h3>Edit Task "{{ task.name }}" related to "{{ project.name }}"</h3>
+
+    <div class="card mt-3 border-primary">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                 <div class="mb-3">
+           {{ form.name.label_tag }}
+        {{ form.name|add_class:"form-control" }}
+        {{ form.name.errors }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description|add_class:"form-control" }}
+        {{ form.description.errors }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.start_date.label_tag }}
+        {{ form.start_date|add_class:"form-control" }}
+        {{ form.start_date.errors }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.end_date.label_tag }}
+        {{ form.end_date|add_class:"form-control" }}
+        {{ form.end_date.errors }}
+    </div>
+
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <a href="{% url 'project_detail' project.id %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
