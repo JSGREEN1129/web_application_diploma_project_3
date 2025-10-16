@@ -11,7 +11,7 @@ h2 {
 
 h3 {
     color: #000080;
-    font-weight: 600; 
+    font-weight: 600;
 }
 
 h4 {
@@ -19,31 +19,58 @@ h4 {
 }
 
 .project_list_header_p {
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
+    color: #000080;
+}
+
+.card-text {
+    font-size: 1.0rem;
     color: #000080;
 }
 
 /* Bootstrap buttons styles modified for better suitability */
 
 .btn-primary {
-    background-color: #000080; /* Colour change */
-    border-color: #000080; /* Border colour change */
+    background-color: #000080;
+    /* Colour change */
+    border-color: #000080;
+    /* Border colour change */
 }
 
 .btn-primary:hover {
-    background-color: #0018f9; /* Lighter shade on hover */
+    background-color: #0018f9;
+    /* Lighter shade on hover */
+    background-color: #0018f9;
+    /* Border colour change */
+
 }
 
 .btn-secondary {
-  background-color: #820101; /* Colour change */
-  border-color: #820101;
-  color: #f7f7f7;
+    background-color: #820101;
+    /* Colour change */
+    border-color: #820101;
 }
 
 .btn-secondary:hover {
-  background-color: #d60000; /* Lighter shade on hover */
-  border-color: #d60000;
+    background-color: #d60000;
+    /* Lighter shade on hover */
+    border-color: #d60000;
 }
+
+.btn-edit {
+    background-color: #995414;
+    border-color: #995414;
+    color: #ffffff;
+}
+
+.btn-edit:hover {
+    background-color: #e3730b;
+    border-color: #e3730b;
+    color: #ffffff;
+
+}
+
+/* Card taggle button styling for complete/re-open */
 
 .only-top-border {
     border-top: 2px solid;
