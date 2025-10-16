@@ -1,6 +1,7 @@
 from django import forms
 from .models import Task
 
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -11,6 +12,7 @@ class TaskForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
         }
+
 
 class TaskEditForm(forms.ModelForm):
     class Meta:
