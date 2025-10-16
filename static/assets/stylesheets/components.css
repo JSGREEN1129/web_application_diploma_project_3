@@ -44,3 +44,38 @@ h4 {
   background-color: #d60000; /* Lighter shade on hover */
   border-color: #d60000;
 }
+
+.only-top-border {
+    border-top: 2px solid;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0 !important;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    padding: 6px 12px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.only-top-border.success {
+    border-top-color: var(--bs-success);
+    color: var(--bs-success);
+}
+
+.only-top-border.success:hover {
+    background-color: var(--bs-success);
+    color: white;
+    text-decoration: none;
+}
+
+.only-top-border.secondary {
+    border-top-color: var(--bs-secondary);
+    color: var(--bs-secondary);
+}
+
+.only-top-border.secondary:hover {
+    background-color: var(--bs-secondary);
+    color: white;
+    text-decoration: none;
+}

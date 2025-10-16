@@ -78,7 +78,7 @@
 
           <!-- Modal -->
           <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1"
-            aria-labelledby="deleteProjectModalLabel{{ project.id }}" {% if error_project_id==project.id %}
+            aria-labelledby="deleteProjectModalLabel{{ project.id }}" {% if error_project_id == project.id %}
             aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
             <div class="modal-dialog">
               <form method="POST" action="{% url 'project_confirm_delete' project.id %}">
