@@ -7,6 +7,7 @@ from django.utils.http import urlencode
 from .models import Project
 from .forms import ProjectForm
 
+
 @login_required
 @never_cache
 def project_create(request):
@@ -25,6 +26,7 @@ def project_create(request):
 
     return render(request, "projects/project_create.html", {"form": form})
 
+
 @login_required
 @never_cache
 def project_list(request):
@@ -32,7 +34,8 @@ def project_list(request):
     error_project_id = request.GET.get("error_project_id")
     error_message = request.GET.get("error_message")
 
-    projects = Project.objects.filter(owner=request.user).prefetch_related("tasks")
+    projects = Project.objects.filter(
+        owner=request.user).prefetch_related("tasks")
     if status_filter in ["open", "closed"]:
         projects = projects.filter(status=status_filter)
 
@@ -47,7 +50,9 @@ def project_list(request):
     }
     return render(request, "projects/project_list.html", context)
 
+
 @login_required
+@never_cache
 def project_detail(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
     status_filter = request.GET.get('status', 'all')
@@ -81,3 +86,76 @@ def project_detail(request, project_id):
         'error_task_id': error_task_id,
     }
     return render(request, 'projects/project_detail.html', context)
+
+
+@login_required
+@never_cache
+def project_edit(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if request.method == "POST":
+        form = ProjectForm(request.POST, instance=project)
+        password = request.POST.get("password")
+
+        if not request.user.check_password(password):
+            messages.error(request, "Incorrect password. Changes not saved.")
+        elif form.is_valid():
+            form.save()
+            messages.success(
+                request, f"Project '{project.name}' updated successfully!")
+            return redirect("project_list")
+    else:
+        form = ProjectForm(instance=project)
+
+    return render(
+        request, "projects/project_edit.html", {
+            "form": form, "project": project}
+    )
+
+@login_required
+@never_cache
+def project_confirm_delete(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if request.method == "POST":
+        password = request.POST.get("password", "")
+        if not request.user.check_password(password):
+            error_message = "Incorrect password. Project not deleted."
+            query_params = urlencode({
+                'error_project_id': project.id,
+                'error_message': error_message,
+            })
+            return redirect(f"{reverse('project_list')}?{query_params}")
+
+        project.delete()
+        messages.success(request, f"Project '{project.name}' deleted successfully!")
+        return redirect("project_list")
+
+    return redirect("project_list")
+
+@login_required
+@never_cache
+def project_toggle_complete(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    if project.status == "open":
+        task_statuses = {str(task.id): task.status for task in project.tasks.all()}
+        project.previous_task_statuses = task_statuses
+        project.status = "closed"
+        project.save()
+        project.tasks.update(status="completed")
+
+        messages.success(
+            request, f'Project "{project.name}" and all tasks marked as completed.'
+        )
+    else:
+        project.status = "open"
+        project.save()
+        prev_statuses = project.previous_task_statuses or {}
+        for task in project.tasks.all():
+            task.status = prev_statuses.get(str(task.id), "outstanding")
+            task.save()
+
+        messages.success(request, f'Project "{project.name}" and all tasks reopened.')
+
+    return redirect("project_list")
