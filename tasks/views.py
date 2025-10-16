@@ -71,3 +71,65 @@ def task_edit(request, task_id):
     }
     return render(request, 'tasks/task_edit.html', context)
 
+@login_required
+@never_cache
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, project__owner=request.user)
+    project = task.project
+
+    next_url = request.POST.get('next') or reverse('project_detail', kwargs={'project_id': project.id})
+
+    if request.method == 'POST':
+        password = request.POST.get('password', '')
+        if not password or not check_password(password, request.user.password):
+            if '?' in next_url:
+                redirect_url = f"{next_url}&error_task_id={task.id}"
+            else:
+                redirect_url = f"{next_url}?error_task_id={task.id}"
+            return redirect(redirect_url)
+
+        task.delete()
+        messages.success(request, f"Task '{task.name}' deleted successfully!")
+        return redirect(next_url)
+
+    return redirect(next_url)
+
+
+@login_required
+@never_cache
+def task_close(request, task_id):
+    task = get_object_or_404(Task, id=task_id, project__owner=request.user)
+    task.status = 'completed'
+    task.check_status()
+    task.save()
+    messages.success(request, f"Task '{task.name}' closed successfully!")
+    return redirect('project_detail', project_id=task.project.id)
+
+
+@login_required
+def task_toggle_complete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, project__owner=request.user)
+
+    if task.status == 'completed':
+        prev_status = task.previous_status if task.previous_status else 'outstanding'
+        task.status = prev_status
+        task.previous_status = None 
+        task.check_status()
+
+        project = task.project
+        if project.status == 'closed':
+            project.status = 'open'
+            project.save()
+            messages.info(request, f"Project '{project.name}' was reopened due to current tasks open and outstanding.")
+
+        messages.success(request, f"Task '{task.name}' reopened.")
+
+    else:
+        task.previous_status = task.status
+        task.status = 'completed'
+        task.check_status() 
+        messages.success(request, f"Task '{task.name}' marked as complete.")
+
+    task.save()
+    return redirect('project_detail', project_id=task.project.id)
+
