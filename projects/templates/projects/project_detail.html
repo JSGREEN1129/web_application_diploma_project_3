@@ -115,7 +115,7 @@
                     </button>
 
                     <div class="modal fade" id="deleteTaskModal{{ task.id }}" tabindex="-1"
-                        aria-labelledby="deleteTaskModalLabel{{ task.id }}" {% if error_task_id==task.id %}
+                        aria-labelledby="deleteTaskModalLabel{{ task.id }}" {% if error_task_id == task.id %}
                         aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
                         <div class="modal-dialog">
                             <form method="POST" action="{% url 'task_delete' task.id %}">
