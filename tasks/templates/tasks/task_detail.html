@@ -8,78 +8,79 @@
 <div class="container my-4">
   <h2 class="mb-4">{{ task.name }} (ID: {{ task.id }})</h2>
 
+  <!-- Task Status Badge -->
   {% if task.status == "completed" %}
-  <span class="badge bg-success mb-3">Completed</span>
+    <span class="badge bg-success mb-3">Completed</span>
   {% elif task.status == "outstanding" %}
-  <span class="badge bg-warning mb-3">Outstanding</span>
+    <span class="badge bg-warning mb-3">Outstanding</span>
   {% elif task.status == "overdue" %}
-  <span class="badge bg-danger mb-3">Overdue</span>
+    <span class="badge bg-danger mb-3">Overdue</span>
   {% endif %}
 
+  <!-- Task Dates -->
   <div class="small text-muted mb-4">
     <p class="mb-1"><strong>Created:</strong> {{ task.created_at|date:"M d, Y" }}</p>
     {% if task.due_date %}
-    <p class="mb-1"><strong>Due:</strong> {{ task.due_date|date:"M d, Y" }}</p>
+      <p class="mb-1"><strong>Due:</strong> {{ task.due_date|date:"M d, Y" }}</p>
     {% endif %}
     {% if task.completed_at %}
-    <p class="mb-1"><strong>Completed:</strong> {{ task.completed_at|date:"M d, Y" }}</p>
+      <p class="mb-1"><strong>Completed:</strong> {{ task.completed_at|date:"M d, Y" }}</p>
     {% endif %}
   </div>
 
+  <!-- Action Buttons -->
   <div class="d-flex gap-2 mb-4">
     {% if task.project.owner == user %}
-    <a href="{% url 'task_edit' task.id %}?next={% url 'task_detail' task.id %}" class="btn btn-edit">Edit Task</a>
-    {% endif %}
+      <a href="{% url 'task_edit' task.id %}?next={% url 'task_detail' task.id %}" class="btn btn-edit">Edit Task</a>
 
-    {% if task.project.owner == user %}
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteTaskModal">
-      Delete Task
-    </button>
+      <!-- Delete Task Button triggers modal -->
+      <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteTaskModal{{ task.id }}">
+        Delete
+      </button>
     {% endif %}
 
     {% if task.status == 'completed' %}
-  <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" 
-     class="btn btn-re-open"
-     onclick="return confirm('Re-open this task?');">
-    Re-open Task
-  </a>
-{% else %}
-  <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" 
-     class="btn btn-confirm-close"
-     onclick="return confirm('Mark this task as complete?');">
-    Mark as Complete
-  </a>
-{% endif %}
-
+      <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" 
+         class="btn btn-re-open"
+         onclick="return confirm('Re-open this task?');">
+        Re-open Task
+      </a>
+    {% else %}
+      <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" 
+         class="btn btn-confirm-close"
+         onclick="return confirm('Mark this task as complete?');">
+        Mark as Complete
+      </a>
+    {% endif %}
 
     <a href="{% url 'project_detail' task.project.id %}" class="btn btn-primary">← Back to Project</a>
   </div>
 
+  <!-- Task Description -->
   <div class="task-description mb-4">
     <p>{{ task.description|default:"No description provided."|linebreaksbr }}</p>
   </div>
 </div>
 
-  <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1"
-            aria-labelledby="deleteProjectModalLabel{{ project.id }}" {% if error_project_id == project.id %}
-            aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
-            <div class="modal-dialog">
+<!-- Delete Task Modal -->
+<div class="modal fade" id="deleteTaskModal{{ task.id }}" tabindex="-1" aria-labelledby="deleteTaskModalLabel{{ task.id }}" aria-hidden="true">
+  <div class="modal-dialog">
     <form method="POST" action="{% url 'task_delete' task.id %}">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{% url 'task_detail' task.id %}">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{% url 'task_detail' task.id %}">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="deleteTaskModalLabel">Confirm Delete</h5>
+          <h5 class="modal-title text-danger" id="deleteTaskModalLabel{{ task.id }}">Confirm Delete</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="modal-text">To delete this task, please enter your password:</p>
+          <p>To delete this task, please enter your password:</p>
           <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
 
-          {% if error_task_id == task.id|stringformat:'s' %}
-          <div class="alert alert-danger mt-3" role="alert">
-            Incorrect password. Task was not deleted.
-          </div>
+          {% if error_task_id|stringformat:"s" == task.id|stringformat:"s" and error_message %}
+            <div class="alert alert-danger mt-3" role="alert">
+              {{ error_message }}
+            </div>
           {% endif %}
         </div>
         <div class="modal-footer">
@@ -90,12 +91,17 @@
     </form>
   </div>
 </div>
+
+<!-- Script to auto-open modal on error -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const errorTaskId = "{{ error_task_id|default:'' }}";
     if (errorTaskId === "{{ task.id|stringformat:'s' }}") {
-      const modal = new bootstrap.Modal(document.getElementById('deleteTaskModal'));
-      modal.show();
+      const modalElement = document.getElementById('deleteTaskModal{{ task.id }}');
+      if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
     }
   });
 </script>
