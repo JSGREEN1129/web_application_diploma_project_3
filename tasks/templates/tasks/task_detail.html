@@ -38,16 +38,19 @@
     {% endif %}
 
     {% if task.status == 'completed' %}
-    <a href="{% url 'task_toggle_complete' task.id %}" class="btn btn-re-open"
-      onclick="return confirm('Re-open this task?');">
-      Reopen Task
-    </a>
-    {% else %}
-    <a href="{% url 'task_toggle_complete' task.id %}" class="btn btn-confirm-close"
-      onclick="return confirm('Mark this task as complete?');">
-      Mark as Complete
-    </a>
-    {% endif %}
+  <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" 
+     class="btn btn-re-open"
+     onclick="return confirm('Re-open this task?');">
+    Re-open Task
+  </a>
+{% else %}
+  <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" 
+     class="btn btn-confirm-close"
+     onclick="return confirm('Mark this task as complete?');">
+    Mark as Complete
+  </a>
+{% endif %}
+
 
     <a href="{% url 'project_detail' task.project.id %}" class="btn btn-primary">← Back to Project</a>
   </div>

@@ -104,6 +104,7 @@ def task_close(request, task_id):
 
 
 @login_required
+@never_cache
 def task_toggle_complete(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
 
@@ -128,5 +129,11 @@ def task_toggle_complete(request, task_id):
         messages.success(request, f"Task '{task.name}' marked as complete.")
 
     task.save()
+
+    next_url = request.GET.get("next")
+    if next_url:
+        return redirect(next_url)
+
     return redirect('project_detail', project_id=task.project.id)
+
 
