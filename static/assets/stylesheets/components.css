@@ -106,11 +106,22 @@ h4 {
 
 }
 
-.btn-confirm-close:hover {
+.btn-confirm-close:hover,
+.btn-confirm-close:focus:hover {
     background-color: #43c936; /* Primary button color */
     border-color: #43c936;
     color:#ffffff;
 
+}
+
+.btn-confirm-close:focus,
+.btn-confirm-close:active,
+.btn-confirm-close.focus {
+    background-color: #43c936;
+    border-color: #43c936;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
 }
 
 /* Card taggle button styling for complete/re-open */
