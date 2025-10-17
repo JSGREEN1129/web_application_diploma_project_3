@@ -9,28 +9,6 @@
   <h2 class="mb-2">My Projects</h2>
   <p class="project_list_header_p">Use the view details button to see a projects associated tasks</p>
 
-  <!-- Messages -->
-  {% if messages %}
-  <div class="mb-3">
-    {% for message in messages %}
-    <div class="alert 
-        {% if message.tags %}alert-{{ message.tags }}
-        {% elif message.level == 40 %}alert-danger
-        {% elif message.level == 25 %}alert-success
-        {% elif message.level == 30 %}alert-warning
-        {% elif message.level == 20 %}alert-info
-        {% elif message.level == 10 %}alert-secondary
-        {% else %}alert-secondary
-        {% endif %}
-        alert-dismissible fade show" role="alert">
-
-      <strong>{{ message }}</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %}
-  </div>
-  {% endif %}
-
   <!-- Action Buttons -->
   <div class="mb-4 d-flex gap-2 flex-wrap">
     <a href="{% url 'project_create' %}" class="btn btn-primary">+ New Project</a>

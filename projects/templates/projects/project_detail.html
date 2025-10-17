@@ -94,31 +94,6 @@
         <a href="{% url 'project_list' %}" class="btn btn-primary">← Back to Projects</a>
     </div>
 
-    {% if messages %}
-    <div class="mb-3">
-        {% for message in messages %}
-        <div class="alert 
-          {% if message.tags %}
-            alert-{{ message.tags }}
-          {% elif message.level == 40 %}
-            alert-danger
-          {% elif message.level == 25 %}
-            alert-success
-          {% elif message.level == 30 %}
-            alert-warning
-          {% elif message.level == 20 %}
-            alert-info
-          {% else %}
-            alert-secondary
-          {% endif %}
-          alert-dismissible fade show" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
     <h3 class="my-3">Tasks</h3>
     {% if tasks %}
     <div class="row">

@@ -8,27 +8,6 @@
 <div class="container my-4">
     <h2 class="mb-4">Edit Project: {{ project.name }} (ID: {{ project.id }})</h2>
 
-    {% if messages %}
-    <div class="mb-3">
-        {% for message in messages %}
-        <div class="alert 
-        {% if message.tags %}alert-{{ message.tags }}
-        {% elif message.level == 40 %}alert-danger
-        {% elif message.level == 25 %}alert-success
-        {% elif message.level == 30 %}alert-warning
-        {% elif message.level == 20 %}alert-info
-        {% elif message.level == 10 %}alert-secondary
-        {% else %}alert-secondary
-        {% endif %}
-        alert-dismissible fade show" role="alert">
-
-            <strong>{{ message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
     <form method="POST">
         {% csrf_token %}
         {% for field in form %}

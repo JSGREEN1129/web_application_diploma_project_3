@@ -8,7 +8,10 @@
     <title>{% block title %}Project Management Systems{% endblock %}</title>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons (required for message icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'assets/stylesheets/base.css' %}">
@@ -23,6 +26,8 @@
 </head>
 
 <body>
+
+    {% include 'core/messages.html' %}
     <!-- Public Navbar -->
     <nav class="navbar navbar-expand-md sticky-top">
         <h1 class="text-xl p-2 ms-4">
@@ -36,11 +41,13 @@
             PMS
             {% endif %}
         </h1>
-        </a>
         <div class="ms-auto d-flex align-items-center hide-on-small">
             <span class="text-xl p-2 me-4">Project Management Systems</span>
         </div>
     </nav>
+
+    <!-- Messages container with proper spacing from navbar -->
+    <div id="messages-spacer" class="d-none"></div>
 
     <!-- Page content -->
     <main class="flex-grow-1">

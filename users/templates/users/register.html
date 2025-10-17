@@ -35,17 +35,19 @@
                                     <!-- Correctly render label without `attrs` -->
                                     {{ login_form.username.label_tag }}
                                     <!-- Add class to the input field -->
-                                    {{ login_form.username|add_class:"form-control"|attr:"placeholder:Enter Your Email"}}                                    
+                                    {{ login_form.username|add_class:"form-control"|attr:"placeholder:Enter Your
+                                    Email"}}
                                     {% if login_form.username.errors %}
-                                        <div class="text-danger small">{{ login_form.username.errors }}</div>
+                                    <div class="text-danger small">{{ login_form.username.errors }}</div>
                                     {% endif %}
                                 </div>
 
                                 <div class="mb-3">
                                     {{ login_form.password.label_tag }}
-                                    {{ login_form.password|add_class:"form-control"|attr:"placeholder:Enter Your Password" }}
+                                    {{ login_form.password|add_class:"form-control"|attr:"placeholder:Enter Your
+                                    Password" }}
                                     {% if login_form.password.errors %}
-                                        <div class="text-danger small">{{ login_form.password.errors }}</div>
+                                    <div class="text-danger small">{{ login_form.password.errors }}</div>
                                     {% endif %}
                                 </div>
 
@@ -56,39 +58,40 @@
                 </div>
 
                 <!-- Register Form -->
-                <div class="tab-pane fade show active" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
+                <div class="tab-pane fade show active" id="pills-register" role="tabpanel"
+                    aria-labelledby="pills-register-tab">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-center mb-4">Register</h5>
                             <form method="POST" action="{% url 'register' %}" novalidate>
                                 {% csrf_token %}
-                                
+
                                 {% for field in register_form %}
-        <div class="mb-3">
-            <!-- Render the label of the field -->
-            {{ field.label_tag }}
+                                <div class="mb-3">
+                                    <!-- Render the label of the field -->
+                                    {{ field.label_tag }}
 
-            <!-- Add the class "form-control" and placeholder for specific fields -->
-            {% if field.name == 'first_name' %}
-                {{ field|add_class:"form-control"|attr:"placeholder:Enter your first name" }}
-            {% elif field.name == 'last_name' %}
-                {{ field|add_class:"form-control"|attr:"placeholder:Enter your last name" }}
-            {% elif field.name == 'email' %}
-                {{ field|add_class:"form-control"|attr:"placeholder:Enter your email" }}
-            {% elif field.name == 'password1' %}
-                {{ field|add_class:"form-control"|attr:"placeholder:Enter your password" }}
-            {% elif field.name == 'password2' %}
-                {{ field|add_class:"form-control"|attr:"placeholder:Confirm your password" }}
-            {% else %}
-                {{ field|add_class:"form-control" }}
-            {% endif %}
+                                    <!-- Add the class "form-control" and placeholder for specific fields -->
+                                    {% if field.name == 'first_name' %}
+                                    {{ field|add_class:"form-control"|attr:"placeholder:Enter your first name" }}
+                                    {% elif field.name == 'last_name' %}
+                                    {{ field|add_class:"form-control"|attr:"placeholder:Enter your last name" }}
+                                    {% elif field.name == 'email' %}
+                                    {{ field|add_class:"form-control"|attr:"placeholder:Enter your email" }}
+                                    {% elif field.name == 'password1' %}
+                                    {{ field|add_class:"form-control"|attr:"placeholder:Enter your password" }}
+                                    {% elif field.name == 'password2' %}
+                                    {{ field|add_class:"form-control"|attr:"placeholder:Confirm your password" }}
+                                    {% else %}
+                                    {{ field|add_class:"form-control" }}
+                                    {% endif %}
 
-            <!-- Display any errors for the field -->
-            {% if field.errors %}
-                <div class="text-danger small">{{ field.errors }}</div>
-            {% endif %}
-        </div>
-    {% endfor %}
+                                    <!-- Display any errors for the field -->
+                                    {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
                                 <button type="submit" name="register_submit"
                                     class="btn btn-primary w-100">Register</button>
                             </form>

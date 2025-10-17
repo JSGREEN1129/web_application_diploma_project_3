@@ -8,7 +8,10 @@
     <title>{% block title %}Project Management Systems{% endblock %}</title>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons (required for message icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'assets/stylesheets/base.css' %}">
@@ -22,7 +25,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/favicon/favicon-16x16.png' %}">
 </head>
 <body>
-
   <!-- Public Navbar -->
  <nav class="navbar navbar-expand-md sticky-top">
   <h1 class="text-xl p-2 ms-4">
@@ -49,10 +51,15 @@
     {% endif %}
   </div>
 </nav>
+{% include 'core/messages.html' %}
+  <!-- Messages container with proper spacing from navbar -->
+    <div id="messages-spacer" class="d-none"></div>
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+    <!-- Page content -->
+    <main class="flex-grow-1">
+        {% block content %}
+        {% endblock %}
+    </main>
 
   <!-- Footer -->
   <footer class="footer d-flex flex-column flex-md-row justify-content-md-between align-items-center px-4 py-3">
