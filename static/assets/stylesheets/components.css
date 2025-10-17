@@ -54,7 +54,7 @@ h4 {
 .btn-primary:hover {
     background-color: #0018f9;
     /* Lighter shade on hover */
-    background-color: #0018f9;
+    border-color: #0018f9;
     /* Border colour change */
 
 }
@@ -120,6 +120,29 @@ h4 {
     background-color: #43c936;
     border-color: #43c936;
     color: #fff;
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-re-open {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #ffffff;
+}
+
+.btn-re-open:hover,
+.btn-re-open:focus:hover {
+    background-color: #b9bbb6;
+    border-color: #b9bbb6;
+    color: #ffffff;
+}
+
+.btn-re-open:focus,
+.btn-re-open:active,
+.btn-re-open.focus {
+    background-color: #b9bbb6;
+    border-color: #b9bbb6;
+    color: #ffffff;
     outline: none;
     box-shadow: none;
 }
