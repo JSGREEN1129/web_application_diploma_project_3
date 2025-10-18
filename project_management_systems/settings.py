@@ -17,8 +17,7 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 # Allowed hosts for deployment
 ALLOWED_HOSTS = os.getenv(
     "DJANGO_ALLOWED_HOSTS",
-    "127.0.0.1,localhost,web-application-diploma-project-3.onrender.com"
-).split(",")
+    "127.0.0.1, localhost, web-application-diploma-project-3.onrender.com").split(",")
 
 # Application definition
 INSTALLED_APPS = [
