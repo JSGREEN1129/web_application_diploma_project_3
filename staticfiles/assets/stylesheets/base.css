@@ -1,0 +1,44 @@
+nav, footer {
+    background-color: #000080;
+    color: white;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+}
+
+.navbar-pms {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.navbar-pms:hover {
+    color: #0018f9;
+}
+
+.hide-on-small {
+    display: none !important;
+}
+
+@media (min-width: 425px) {
+    .hide-on-small {
+        display: flex !important; 
+    }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
