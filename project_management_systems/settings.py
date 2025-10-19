@@ -2,6 +2,8 @@ from pathlib import Path
 from django.contrib.messages import constants as message_constants
 import os
 from dotenv import load_dotenv
+import dj_database_url
+
 
 # Load variables from .env file
 load_dotenv()
@@ -70,10 +72,9 @@ WSGI_APPLICATION = 'project_management_systems.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+    )
 }
 
 # Password validation
