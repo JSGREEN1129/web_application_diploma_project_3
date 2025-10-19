@@ -1,0 +1,7 @@
+# Ignore environment and cache files
+.env
+*.pyc
+__pycache__/
+db.sqlite3
+/staticfiles/
+/venv/
