@@ -35,7 +35,7 @@
 
 .nav-pills .nav-link.active {
     background-color: #000080; /* Blue color for active tab */
-    color: white; /* White text for active tab */
+    color: #ffffff; /* White text for active tab */
 }
 
 .form-label {

@@ -169,7 +169,7 @@ h4 {
 
 .only-top-border.success:hover {
     background-color: var(--bs-success);
-    color: white;
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -180,6 +180,6 @@ h4 {
 
 .only-top-border.secondary:hover {
     background-color: var(--bs-secondary);
-    color: white;
+    color: #ffffff;
     text-decoration: none;
 }
