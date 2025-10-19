@@ -53,12 +53,12 @@
       {% endif %}
     </div>
   </nav>
+  {% include 'core/messages.html' %}
+  <!-- Messages container with proper spacing from navbar -->
+  <div id="messages-spacer" class="d-none"></div>
 
   <!-- Page content -->
   <main class="flex-grow-1">
-    {% include 'core/messages.html' %}
-    <!-- Messages container with proper spacing from navbar -->
-    <div id="messages-spacer" class="d-none"></div>
     {% block content %}
     {% endblock %}
   </main>

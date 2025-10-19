@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons (required for message icons) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -27,7 +27,6 @@
 
 <body>
 
-    {% include 'core/messages.html' %}
     <!-- Public Navbar -->
     <nav class="navbar navbar-expand-md sticky-top">
         <h1 class="text-xl p-2 ms-4">
@@ -45,7 +44,7 @@
             <span class="text-xl p-2 me-4">Project Management Systems</span>
         </div>
     </nav>
-
+    {% include 'core/messages.html' %}
     <!-- Messages container with proper spacing from navbar -->
     <div id="messages-spacer" class="d-none"></div>
 
