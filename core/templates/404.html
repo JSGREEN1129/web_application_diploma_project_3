@@ -1,0 +1,28 @@
+{% extends 'core/base_users.html' %}
+
+{% block title %}404 - Page Not Found{% endblock %}
+
+{% block content %}
+<section class="d-flex align-items-center py-3">
+    <div class="container py-3">
+        <div class="row align-items-center">
+            <div class="col-md-6 order-md-2 text-center">
+                <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js" type="module"></script>
+                <dotlottie-wc
+                    src="https://lottie.host/fbcb4104-673f-4719-b31a-dbb69146f824/X5HPtlwR8G.lottie"
+                    style="width: 100%; max-width: 500px; height: auto"
+                    autoplay
+                    loop>
+                </dotlottie-wc>
+            </div>
+            <div class="col-md-6 text-center text-md-start mt-4 mt-md-0">
+                <h2>Error 404</h2>
+                <p>
+                    The page you are looking for was moved, removed, or might never have existed.
+                </p>
+                <a class="btn btn-lg btn-primary" href="{% url 'project_list' %}">Back to Projects</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
