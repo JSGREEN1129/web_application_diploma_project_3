@@ -31,6 +31,7 @@ def task_create(request, project_id):
 
     return render(request, 'tasks/task_create.html', {'form': form, 'project': project})
 
+
 @login_required
 @never_cache
 def task_detail(request, task_id):
@@ -52,7 +53,8 @@ def task_edit(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
     project = task.project
 
-    redirect_to = request.GET.get('next', reverse('project_detail', kwargs={'project_id': project.id}))
+    redirect_to = request.GET.get('next', reverse(
+        'project_detail', kwargs={'project_id': project.id}))
 
     if request.method == 'POST':
         form = TaskEditForm(request.POST, instance=task)
@@ -60,7 +62,8 @@ def task_edit(request, task_id):
             task = form.save(commit=False)
             task.check_status()
             task.save()
-            messages.success(request, f"Task '{task.name}' updated successfully!")
+            messages.success(
+                request, f"Task '{task.name}' updated successfully!")
             return redirect(redirect_to)
     else:
         form = TaskEditForm(instance=task)
@@ -74,7 +77,8 @@ def task_delete(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
     project = task.project
 
-    next_url = request.POST.get('next') or reverse('project_detail', kwargs={'project_id': project.id})
+    next_url = request.POST.get('next') or reverse(
+        'project_detail', kwargs={'project_id': project.id})
 
     if request.method == 'POST':
         password = request.POST.get('password', '')
@@ -111,21 +115,22 @@ def task_toggle_complete(request, task_id):
     if task.status == 'completed':
         prev_status = task.previous_status if task.previous_status else 'outstanding'
         task.status = prev_status
-        task.previous_status = None 
+        task.previous_status = None
         task.check_status()
 
         project = task.project
         if project.status == 'closed':
             project.status = 'open'
             project.save()
-            messages.info(request, f"Project '{project.name}' was reopened due to current tasks open and outstanding.")
+            messages.info(
+                request, f"Project '{project.name}' was reopened due to current tasks open and outstanding.")
 
         messages.success(request, f"Task '{task.name}' reopened.")
 
     else:
         task.previous_status = task.status
         task.status = 'completed'
-        task.check_status() 
+        task.check_status()
         messages.success(request, f"Task '{task.name}' marked as complete.")
 
     task.save()
@@ -135,5 +140,3 @@ def task_toggle_complete(request, task_id):
         return redirect(next_url)
 
     return redirect('project_detail', project_id=task.project.id)
-
-

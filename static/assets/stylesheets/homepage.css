@@ -1,38 +1,39 @@
 /* stylesheet for the homepage */
 
 .homepage-hero {
-    background: url('/static/images/project_management_system_front_page_background.webp') no-repeat center center;
-    background-size: cover;
-    min-height: 70vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    color: #ffffff;
-    text-align: center;
-    border-bottom: 2px solid #ffffff;
-    overflow: hidden;
+  background: url('/static/images/project_management_system_front_page_background.webp') no-repeat center center;
+  background-size: cover;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 2px solid #ffffff;
+  overflow: hidden;
 }
 
-.homepage-hero::before, .features-box::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1;
+.homepage-hero::before,
+.features-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
 /* Make sure Hero content is layered above the overlay */
-.homepage-hero > .container {
-    position: relative;
-    z-index: 2;
+.homepage-hero>.container {
+  position: relative;
+  z-index: 2;
 }
 
 /* Styling overide to enusre the login and register buttons are the same-size */
 .same-size-btn {
-    min-width: 100px;
-    min-height: 50px;
-    border-color: #ffffff !important;
+  min-width: 100px;
+  min-height: 50px;
+  border-color: #ffffff !important;
 }
 
 /* Target features boxes indivitually and apply different background images */
@@ -54,24 +55,24 @@
 
 /* Target features boxes collectivly for shared styling */
 .features-box {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 25vh;
-    color: #ffffff;
-    position: relative;
-    z-index: 0;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;            
-    box-sizing: border-box;
-    word-wrap: break-word;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 25vh;
+  color: #ffffff;
+  position: relative;
+  z-index: 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 /* Make sure features box content is layered above the overlay */
-.features-box > * {
-    position: relative;
-    z-index: 2;
+.features-box>* {
+  position: relative;
+  z-index: 2;
 }

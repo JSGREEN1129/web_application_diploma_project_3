@@ -4,61 +4,66 @@
 {% block title %}PMS - Project Management Systems{% endblock %}
 
 {% block content %}
-    <section class="homepage-hero">
-      <div class="container position-relative">
-        <h1 class="display-4 fw-bold">Project Management Systems</h1>
-        <p class="lead mt-3">
-          Organise your projects, manage tasks, and boost productivity with ease.
-        </p>
-        <div class="d-flex justify-content-center w-100 gap-3 mt-5">
-          <a href="{% url 'login' %}" class="btn same-size-btn btn-primary btn-lg">Login</a>
-          <a href="{% url 'register' %}" class="btn same-size-btn btn-primary btn-lg">Register</a>
+<section class="homepage-hero">
+  <div class="container position-relative">
+    <h1 class="display-4 fw-bold">Project Management Systems</h1>
+    <p class="lead mt-3">
+      Organise your projects, manage tasks, and boost productivity with ease.
+    </p>
+    <div class="d-flex justify-content-center w-100 gap-3 mt-5">
+      <a href="{% url 'login' %}" class="btn same-size-btn btn-primary btn-lg">Login</a>
+      <a href="{% url 'register' %}" class="btn same-size-btn btn-primary btn-lg">Register</a>
+    </div>
+  </div>
+</section>
+
+<section class="features-section py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-1">
+          <div class="features-content">
+            <h4>Project Tracking</h4>
+            <p>Create and manage multiple projects with timelines and status tracking. Stay organized by associating
+              project-specific tasks and tracking individual task status.
+              Track end dates and ensure every project stays on schedule and within scope.</p>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="features-section py-5">
-      <div class="container">
-        <div class="row g-4 text-center">
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="features-box features-box-1">
-              <div class="features-content">
-                <h4>Project Tracking</h4>
-                <p>Create and manage multiple projects with timelines and status tracking. Stay organized by associating project-specific tasks and tracking individual task status. 
-                   Track end dates and ensure every project stays on schedule and within scope.</p>
-              </div>
-            </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-2">
+          <div class="features-content">
+            <h4>Task Management</h4>
+            <p>Add, assign, and track tasks with status updates and deadlines. Monitor progress through real-time
+              updates, adjust deadlines when needed, and ensure accountability at every stage of the workflow.</p>
           </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="features-box features-box-2">
-              <div class="features-content">
-                <h4>Task Management</h4>
-                <p>Add, assign, and track tasks with status updates and deadlines. Monitor progress through real-time updates, adjust deadlines when needed, and ensure accountability at every stage of the workflow.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="features-box features-box-3">
-              <div class="features-content">
-                <h4>User-Friendly</h4>
-                <p>Navigate effortlessly with an intuitive layout optimised for desktops, tablets, and mobile phones. Enjoy a seamless user experience with responsive elements, accessible controls, and a clutter-free interface that enhances productivity.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="features-box features-box-4">
-              <div class="features-content">
-                <h4>Secure and Reliable</h4>
-                <p>Protect your data with robust security measures and encrypted connections. The app is built with best practices in authentication and access control to ensure that your projects and tasks remain safe.</p>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
-    </section>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-3">
+          <div class="features-content">
+            <h4>User-Friendly</h4>
+            <p>Navigate effortlessly with an intuitive layout optimised for desktops, tablets, and mobile phones. Enjoy
+              a seamless user experience with responsive elements, accessible controls, and a clutter-free interface
+              that enhances productivity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="features-box features-box-4">
+          <div class="features-content">
+            <h4>Secure and Reliable</h4>
+            <p>Protect your data with robust security measures and encrypted connections. The app is built with best
+              practices in authentication and access control to ensure that your projects and tasks remain safe.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 {% endblock %}

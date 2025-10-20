@@ -6,6 +6,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 User = get_user_model()
 
+
 @never_cache
 def login_view(request):
     login_form = CustomAuthenticationForm(request, data=request.POST or None)
@@ -17,22 +18,27 @@ def login_view(request):
 
         # If no email or password, show generic error to avoid info leak
         if not email or not password:
-            messages.error(request, "Please enter your registered email and password to login.")
+            messages.error(
+                request, "Please enter your registered email and password to login.")
         else:
             # Check if user with email exists
             user_exists = User.objects.filter(email=email).exists()
 
             if not user_exists:
-                messages.error(request, "There is no active account associated with the email address.")
+                messages.error(
+                    request, "There is no active account associated with the email address.")
             else:
                 # User exists, check password
-                user_auth = authenticate(request, username=email, password=password)
+                user_auth = authenticate(
+                    request, username=email, password=password)
                 if user_auth is not None:
-                    login(request, user_auth, backend='users.backends.EmailBackend')
+                    login(request, user_auth,
+                          backend='users.backends.EmailBackend')
                     messages.success(request, "Logged in successfully!")
                     return redirect('project_list')
                 else:
-                    messages.error(request, "You have entered your password incorrectly.")
+                    messages.error(
+                        request, "You have entered your password incorrectly.")
 
     context = {
         'login_form': login_form,
@@ -40,6 +46,7 @@ def login_view(request):
         'show_form': 'login'
     }
     return render(request, 'users/login.html', context)
+
 
 @never_cache
 def register_view(request):
@@ -70,7 +77,3 @@ def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out.")
     return redirect('login')  # Redirect to login page after logout
-
-
-
-

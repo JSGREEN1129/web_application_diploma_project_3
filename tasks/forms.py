@@ -28,19 +28,20 @@ class TaskForm(forms.ModelForm):
         end_date = self.cleaned_data.get('end_date')
         start_date = self.cleaned_data.get('start_date')
         today = timezone.now().date()
-        
+
         if end_date:
             if end_date < today:
                 raise forms.ValidationError("End date cannot be in the past.")
-            
+
             if start_date and end_date < start_date:
-                raise forms.ValidationError("End date cannot be before start date.")
-        
+                raise forms.ValidationError(
+                    "End date cannot be before start date.")
+
         return end_date
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance.pk is None: 
+        if self.instance.pk is None:
             today = timezone.now().date()
             self.initial['start_date'] = today
             self.initial['end_date'] = today + timezone.timedelta(days=7)
@@ -68,13 +69,15 @@ class TaskEditForm(forms.ModelForm):
         end_date = self.cleaned_data.get('end_date')
         start_date = self.cleaned_data.get('start_date')
         instance = self.instance
-        
+
         if end_date:
             if start_date and end_date < start_date:
-                raise forms.ValidationError("End date cannot be before start date.")
-            
+                raise forms.ValidationError(
+                    "End date cannot be before start date.")
+
             today = timezone.now().date()
             if end_date < today and instance.status != 'completed':
-                raise forms.ValidationError("End date cannot be in the past for active tasks.")
-        
+                raise forms.ValidationError(
+                    "End date cannot be in the past for active tasks.")
+
         return end_date

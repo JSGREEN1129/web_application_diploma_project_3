@@ -100,17 +100,19 @@ h4 {
 }
 
 .btn-confirm-close {
-    background-color: #3b9333; /* Primary button color */
+    background-color: #3b9333;
+    /* Primary button color */
     border-color: #3b9333;
-    color:#ffffff;
+    color: #ffffff;
 
 }
 
 .btn-confirm-close:hover,
 .btn-confirm-close:focus:hover {
-    background-color: #43c936; /* Primary button color */
+    background-color: #43c936;
+    /* Primary button color */
     border-color: #43c936;
-    color:#ffffff;
+    color: #ffffff;
 
 }
 

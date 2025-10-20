@@ -14,31 +14,41 @@
 /* Smaller screens: reduce width and padding */
 @media (max-width: 767.98px) {
     .login-register-container {
-        max-width: 90%;         /* Make it responsive */
-        padding: 20px;          /* Slightly less padding */
-        margin: 30px auto;      /* Reduce vertical margin */
+        max-width: 90%;
+        /* Make it responsive */
+        padding: 20px;
+        /* Slightly less padding */
+        margin: 30px auto;
+        /* Reduce vertical margin */
     }
 }
 
 .border-primary {
-  border-color: #000080 !important;
-  border-width: 2px !important;
+    border-color: #000080 !important;
+    border-width: 2px !important;
 }
 
 .card-title {
-    font-size: 1.8rem; /* Increase title font size */
-    color: #000080; /* Dark text color */
+    font-size: 1.8rem;
+    /* Increase title font size */
+    color: #000080;
+    /* Dark text color */
 }
+
 .nav-pills .nav-link {
-    color: #000080; /* Dark color for tab links */
+    color: #000080;
+    /* Dark color for tab links */
 }
 
 .nav-pills .nav-link.active {
-    background-color: #000080; /* Blue color for active tab */
-    color: #ffffff; /* White text for active tab */
+    background-color: #000080;
+    /* Blue color for active tab */
+    color: #ffffff;
+    /* White text for active tab */
 }
 
 .form-label {
     color: #000080;
-    font-weight: 400; /* Optional: make it bold */
+    font-weight: 400;
+    /* Optional: make it bold */
 }

@@ -92,13 +92,15 @@ def project_detail(request, project_id):
 @never_cache
 def project_edit(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
-    redirect_to = request.GET.get('next', reverse('project_detail', kwargs={'project_id': project.id}))
+    redirect_to = request.GET.get('next', reverse(
+        'project_detail', kwargs={'project_id': project.id}))
 
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             project = form.save()
-            messages.success(request, f"Project '{project.name}' updated successfully!")
+            messages.success(
+                request, f"Project '{project.name}' updated successfully!")
             return redirect(redirect_to)
     else:
         form = ProjectForm(instance=project)
@@ -122,10 +124,12 @@ def project_confirm_delete(request, project_id):
             return redirect(f"{reverse('project_list')}?{query_params}")
 
         project.delete()
-        messages.success(request, f"Project '{project.name}' deleted successfully!")
+        messages.success(
+            request, f"Project '{project.name}' deleted successfully!")
         return redirect("project_list")
 
     return redirect("project_list")
+
 
 @login_required
 @never_cache
@@ -133,7 +137,8 @@ def project_toggle_complete(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
 
     if project.status == "open":
-        task_statuses = {str(task.id): task.status for task in project.tasks.all()}
+        task_statuses = {
+            str(task.id): task.status for task in project.tasks.all()}
         project.previous_task_statuses = task_statuses
         project.status = "closed"
         project.save()
@@ -150,6 +155,7 @@ def project_toggle_complete(request, project_id):
             task.status = prev_statuses.get(str(task.id), "outstanding")
             task.save()
 
-        messages.success(request, f'Project "{project.name}" and all tasks reopened.')
+        messages.success(
+            request, f'Project "{project.name}" and all tasks reopened.')
 
     return redirect("project_list")
