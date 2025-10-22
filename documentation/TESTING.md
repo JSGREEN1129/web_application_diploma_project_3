@@ -46,5 +46,3 @@ I used my created tests.py files to run application tests:
 
 To run the tests I used the following command in the VSCODE terminal, while inside my project root folder:
 
-```bash
-python manage.py test -v2
