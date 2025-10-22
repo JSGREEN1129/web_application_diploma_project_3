@@ -14,15 +14,16 @@ from projects.models import Project
 @login_required
 @never_cache
 def task_create(request, project_id):
+    # Ensure only the project owner can add tasks
     project = get_object_or_404(Project, id=project_id, owner=request.user)
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.project = project
+            task.project = project  # Link task to the correct project
             task.save()
-            task.check_status()
+            task.check_status()  # Ensure status is up-to-date
             messages.success(
                 request, f"Task '{task.name}' created successfully!")
             return redirect('project_detail', project_id=project.id)
@@ -37,9 +38,9 @@ def task_create(request, project_id):
 def task_detail(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
 
-    task.check_status()
+    task.check_status()  # Refresh status before showing
 
-    error_task_id = request.GET.get('error_task_id', '')
+    error_task_id = request.GET.get('error_task_id', '')  # Used for modal error re-display
 
     return render(request, 'tasks/task_detail.html', {
         'task': task,
@@ -60,7 +61,7 @@ def task_edit(request, task_id):
         form = TaskEditForm(request.POST, instance=task)
         if form.is_valid():
             task = form.save(commit=False)
-            task.check_status()
+            task.check_status()  # Update status after changes
             task.save()
             messages.success(
                 request, f"Task '{task.name}' updated successfully!")
@@ -77,11 +78,14 @@ def task_delete(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
     project = task.project
 
+    # Get redirect path from POST or fallback to project page
     next_url = request.POST.get('next') or reverse(
         'project_detail', kwargs={'project_id': project.id})
 
     if request.method == 'POST':
         password = request.POST.get('password', '')
+
+        # Secure password check
         if not password or not check_password(password, request.user.password):
             if '?' in next_url:
                 redirect_url = f"{next_url}&error_task_id={task.id}"
@@ -113,11 +117,13 @@ def task_toggle_complete(request, task_id):
     task = get_object_or_404(Task, id=task_id, project__owner=request.user)
 
     if task.status == 'completed':
+        # Revert to previous or default to 'outstanding'
         prev_status = task.previous_status if task.previous_status else 'outstanding'
         task.status = prev_status
         task.previous_status = None
         task.check_status()
 
+        # Reopen project if needed
         project = task.project
         if project.status == 'closed':
             project.status = 'open'
@@ -128,6 +134,7 @@ def task_toggle_complete(request, task_id):
         messages.success(request, f"Task '{task.name}' reopened.")
 
     else:
+        # Mark as completed and store old status
         task.previous_status = task.status
         task.status = 'completed'
         task.check_status()
@@ -135,6 +142,7 @@ def task_toggle_complete(request, task_id):
 
     task.save()
 
+    # Redirect to 'next' URL if present, else to project detail
     next_url = request.GET.get("next")
     if next_url:
         return redirect(next_url)

@@ -10,24 +10,29 @@
 
     <div class="card mt-3 border-primary">
         <div class="card-body">
+
+            {# Start form for editing project details #}
             <form method="POST">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="mb-3">
                     {{ field.label_tag }}
                     {{ field|add_class:"form-control" }}
+
+                    {# Show validation errors if present #}
                     {% if field.errors %}
                     <div class="text-danger small">{{ field.errors }}</div>
                     {% endif %}
                 </div>
                 {% endfor %}
 
-                <!-- Password confirmation -->
+                {# Password confirmation before allowing edits #}
                 <div class="mb-3">
                     <label for="password">Enter your password to confirm changes</label>
                     <input type="password" class="form-control" name="password" required>
                 </div>
 
+                {# Submit button and cancel/back button #}
                 <button type="submit" class="btn btn-primary">Save Changes</button>
                 <a href="{{ next }}" class="btn btn-secondary">Cancel</a>
             </form>

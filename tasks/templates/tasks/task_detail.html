@@ -6,9 +6,10 @@
 
 {% block content %}
 <div class="container my-4">
+  {# Task title and ID #}
   <h2 class="mb-4">{{ task.name }} (ID: {{ task.id }})</h2>
 
-  <!-- Task Status Badge -->
+  {# Display task status with colored badges #}
   {% if task.status == "completed" %}
   <span class="badge bg-success mb-3">Completed</span>
   {% elif task.status == "outstanding" %}
@@ -17,7 +18,7 @@
   <span class="badge bg-danger mb-3">Overdue</span>
   {% endif %}
 
-  <!-- Task Dates -->
+  {# Task creation, due, and completion dates #}
   <div class="small text-muted mb-4">
     <p class="mb-1"><strong>Created:</strong> {{ task.created_at|date:"M d, Y" }}</p>
     {% if task.due_date %}
@@ -28,18 +29,19 @@
     {% endif %}
   </div>
 
-  <!-- Action Buttons -->
+  {# Action buttons section #}
   <div class="d-flex gap-2 mb-4">
     {% if task.project.owner == user %}
     <a href="{% url 'task_edit' task.id %}?next={% url 'task_detail' task.id %}" class="btn btn-edit">Edit Task</a>
 
-    <!-- Delete Task Button triggers modal -->
+    {# Delete button triggers modal popup #}
     <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
       data-bs-target="#deleteTaskModal{{ task.id }}">
       Delete
     </button>
     {% endif %}
 
+    {# Button to toggle task completion status #}
     {% if task.status == 'completed' %}
     <a href="{% url 'task_toggle_complete' task.id %}?next={% url 'task_detail' task.id %}" class="btn btn-re-open"
       onclick="return confirm('Re-open this task?');">
@@ -52,16 +54,17 @@
     </a>
     {% endif %}
 
+    {# Link to go back to the parent project detail page #}
     <a href="{% url 'project_detail' task.project.id %}" class="btn btn-primary">← Back to Project</a>
   </div>
 
-  <!-- Task Description -->
+  {# Task description, with line breaks and fallback text if empty #}
   <div class="task-description mb-4">
     <p>{{ task.description|default:"No description provided."|linebreaksbr }}</p>
   </div>
 </div>
 
-<!-- Delete Task Modal -->
+{# Delete confirmation modal popup #}
 <div class="modal fade" id="deleteTaskModal{{ task.id }}" tabindex="-1"
   aria-labelledby="deleteTaskModalLabel{{ task.id }}" aria-hidden="true">
   <div class="modal-dialog">
@@ -77,6 +80,7 @@
           <p>To delete this task, please enter your password:</p>
           <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
 
+          {# Show error message if password was incorrect #}
           {% if error_task_id|stringformat:"s" == task.id|stringformat:"s" and error_message %}
           <div class="alert alert-danger mt-3" role="alert">
             {{ error_message }}
@@ -92,7 +96,7 @@
   </div>
 </div>
 
-<!-- Script to auto-open modal on error -->
+{# JavaScript to auto-open modal if there was an error during deletion #}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const errorTaskId = "{{ error_task_id|default:'' }}";

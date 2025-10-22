@@ -6,6 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Page title using Django block -->
   <title>{% block title %}Project Management Systems{% endblock %}</title>
 
   <!-- Bootstrap -->
@@ -27,7 +28,7 @@
 </head>
 
 <body>
-  <!-- Public Navbar -->
+  <!-- Authenticated users Navbar -->
   <nav class="navbar navbar-expand-md sticky-top">
     <h1 class="text-xl p-2 ms-4">
       {% if request.path != '/project_list/' %}
@@ -45,16 +46,18 @@
       <span class="text-white me-4">Welcome, {{ user.first_name }}</span>
       <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm me-3">Logout</a>
       {% else %}
+      <!-- Login and Register links used for 404 -->
       <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-3">Login</a>
       <a href="{% url 'register' %}" class="btn btn-outline-light btn-sm">Register</a>
       {% endif %}
     </div>
   </nav>
+  <!-- Django messages -->
   {% include 'core/messages.html' %}
   <!-- Messages container with proper spacing from navbar -->
   <div id="messages-spacer" class="d-none"></div>
 
-  <!-- Page content -->
+  <!-- Main page content -->
   <main class="flex-grow-1">
     {% block content %}
     {% endblock %}

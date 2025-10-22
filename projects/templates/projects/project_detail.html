@@ -1,4 +1,6 @@
 {% extends 'core/base_users.html' %}
+
+{# Load static files and widget_tweaks to style form inputs #}
 {% load static %}
 {% load static widget_tweaks %}
 
@@ -6,10 +8,16 @@
 
 {% block content %}
 <div class="container my-4">
+
+    {# Project Title with ID #}
     <h2 class="mb-4">{{ project.name }} (ID: {{ project.id }})</h2>
+
+    {# Project description preview with collapsible full text #}
     {% if project.description %}
         <p id="descriptionPreview" class="description-text">
             {{ project.description|truncatechars:150|linebreaksbr }}
+
+            {# If the description is long, show "Expand" link #}
             {% if project.description|length > 150 %}
                 ... <a id="toggleDescription" 
                        data-bs-toggle="collapse" 
@@ -22,6 +30,7 @@
             {% endif %}
         </p>
 
+        {# Collapsible section for full description #}
         {% if project.description|length > 150 %}
             <div class="collapse mt-2" id="fullDescription">
                 <p class="description-text">{{ project.description|linebreaksbr }}</p>
@@ -29,12 +38,14 @@
         {% endif %}
     {% endif %}
 
+    {# Project status badge #}
     {% if project.status == "open" %}
     <span class="badge bg-success mb-3">Open</span>
     {% elif project.status == "closed" %}
     <span class="badge bg-secondary mb-3">Closed</span>
     {% endif %}
 
+    {# Task statistics for the project #}
     <div class="small text-muted mb-4">
         <p class="mb-1"><strong>Total Tasks:</strong> {{ project.total_tasks }}</p>
         <p class="mb-1">✔ Completed: {{ project.completed_count }}</p>
@@ -42,6 +53,7 @@
         <p class="mb-1 text-danger">⚠ Overdue: {{ project.overdue_count }}</p>
     </div>
 
+    {# Action buttons: filter tasks, edit, delete, back #}
     <div class="mb-4 d-flex gap-2 flex-wrap">
         <a href="{% url 'task_create' project.id %}" class="btn btn-primary">+ Add Task</a>
         <a href="{% url 'project_detail' project.id %}?status=all"
@@ -53,13 +65,14 @@
         <a href="{% url 'project_detail' project.id %}?status=overdue"
             class="btn btn-primary {% if status_filter == 'overdue' %}active{% endif %}">Overdue</a>
         <a href="{% url 'project_edit' project.id %}?next={% url 'project_detail' project.id %}" class="btn btn-edit">Edit Project</a>
-        <!-- Delete Button triggers modal -->
+        
+          {# Delete Project Button triggers modal #}
           <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
             data-bs-target="#deleteProjectModal{{ project.id }}">
             Delete Project
           </button>
 
-          <!-- Modal -->
+          {# Delete Project Modal with password confirmation #}
           <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1"
             aria-labelledby="deleteProjectModalLabel{{ project.id }}" {% if error_project_id == project.id %}
             aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
@@ -94,6 +107,7 @@
         <a href="{% url 'project_list' %}" class="btn btn-primary">← Back to Projects</a>
     </div>
 
+    {# Task Section #}
     <h3 class="my-3">Tasks</h3>
     {% if tasks %}
     <div class="row">
@@ -104,6 +118,7 @@
                     <h5 class="card-title">{{ task.name|default:"Untitled Task" }}</h5>
                     <p class="card-text">{{ task.description|default:"No description"|truncatechars:100 }}</p>
 
+                    {# Task status badge #}
                     {% if task.status == "completed" %}
                     <span class="badge bg-success">Completed</span>
                     {% elif task.status == "outstanding" %}
@@ -112,6 +127,7 @@
                     <span class="badge bg-danger">Overdue</span>
                     {% endif %}
 
+                    {# Task date info #}
                     <div class="mt-3 small text-muted">
                         {% if task.start_date %}
                         <p><strong>Start Date:</strong> {{ task.start_date|date:"M d, Y" }}</p>
@@ -122,6 +138,7 @@
                     </div>
                 </div>
 
+                {# Card Footer with Edit/Delete/Toggle Buttons #}
                 <div class="card-footer bg-transparent border-top-0 d-flex gap-2 flex-wrap">
                     <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-primary">View Details</a>
                     <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-edit">Edit</a>
@@ -131,6 +148,7 @@
                         Delete
                     </button>
 
+                    {# Task Delete Modal with password confirmation #}
                     <div class="modal fade" id="deleteTaskModal{{ task.id }}" tabindex="-1"
                         aria-labelledby="deleteTaskModalLabel{{ task.id }}" {% if error_task_id == task.id %}
                         aria-modal="true" role="dialog" {% else %} aria-hidden="true" {% endif %}>
@@ -183,25 +201,33 @@
     {% endif %}
 </div>
 <script>
+    // Run when the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function () {
+        // Get the ID of the task that failed deletion (if any), passed from the view context
         const errorTaskId = "{{ error_task_id|default:'' }}";
+        // If there is an error for a specific task, reopen its delete modal automatically
         if (errorTaskId) {
             const modal = new bootstrap.Modal(document.getElementById('deleteTaskModal' + errorTaskId));
-            modal.show();
+            modal.show(); // Show the modal to inform the user of the error (e.g., wrong password)
         }
     });
 
+    // Run another DOMContentLoaded listener for the expandable/collapsible project description
     document.addEventListener("DOMContentLoaded", function () {
+        // Grab the 'Expand'/'Collapse' link and the hidden content element
         const toggleLink = document.getElementById("toggleDescription");
         const collapseEl = document.getElementById("fullDescription");
 
+        // Initialise Bootstrap collapse functionality without auto-toggling on page load
         const bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
 
+        // Change the toggle text and accessibility attributes when expanding
         collapseEl.addEventListener('show.bs.collapse', function () {
             toggleLink.textContent = "Collapse";
             toggleLink.setAttribute('aria-expanded', 'true');
         });
 
+        // Change the toggle text and attributes when collapsing
         collapseEl.addEventListener('hide.bs.collapse', function () {
             toggleLink.textContent = "Expand";
             toggleLink.setAttribute('aria-expanded', 'false');

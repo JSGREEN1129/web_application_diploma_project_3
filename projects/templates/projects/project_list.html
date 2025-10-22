@@ -9,7 +9,7 @@
   <h2 class="mb-2">My Projects</h2>
   <p class="project_list_header_p">Use the view details button to see a projects associated tasks</p>
 
-  <!-- Action Buttons -->
+  {# Filter and create buttons #}
   <div class="mb-4 d-flex gap-2 flex-wrap">
     <a href="{% url 'project_create' %}" class="btn btn-primary">+ New Project</a>
     <a href="?status=open" class="btn btn-primary {% if status_filter == 'open' %}active{% endif %}">⚇ Open Projects</a>
@@ -18,7 +18,7 @@
     <a href="?status=all" class="btn btn-primary {% if status_filter == 'all' %}active{% endif %}">All Projects</a>
   </div>
 
-  <!-- Projects Grid -->
+  {# Project cards section #}
   <div class="row">
     {% if projects %}
     {% for project in projects %}
@@ -29,14 +29,15 @@
           <p class="card-text">
             {{ project.description|default:"No description"|truncatechars:100 }}
           </p>
-          <!-- Status Badge -->
+
+          {# Show project status badge #}
           {% if project.status == "open" %}
           <span class="badge bg-success mb-3">Open</span>
           {% elif project.status == "closed" %}
           <span class="badge bg-secondary mb-3">Closed</span>
           {% endif %}
 
-          <!-- Task Stats -->
+          {# Task statistics #}
           <div class="small text-muted">
             <p class="mb-1 tasks-total"><strong>Tasks:</strong> {{ project.total_tasks }} total</p>
             <p class="mb-1 tasks-text-completed">✔ Completed: {{ project.completed_count }}</p>
@@ -46,15 +47,18 @@
         </div>
 
         <div class="card-footer bg-transparent border-top-0">
+          {# Action buttons: View, Edit, Delete #}
           <a href="{% url 'project_detail' project.id %}" class="btn btn-sm btn-primary">View Details</a>
           <a href="{% url 'project_edit' project.id %}?next={% url 'project_list' %}"
             class="btn btn-sm btn-edit">Edit</a>
-          <!-- Delete Button triggers modal -->
+
+          {# Delete Project - Modal trigger #}
           <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
             data-bs-target="#deleteProjectModal{{ project.id }}">
             Delete
           </button>
 
+          {# Modal for delete confirmation #}
           <div class="modal fade" id="deleteProjectModal{{ project.id }}" tabindex="-1"
             aria-labelledby="deleteProjectModalLabel{{ project.id }}" aria-hidden="true">
 
@@ -71,6 +75,7 @@
                     <input type="password" name="password" class="form-control" placeholder="Enter your password"
                       required>
 
+                    {# Show error message if deletion failed #}  
                     {% if error_project_id|stringformat:"s" == project.id|stringformat:"s" and error_message %}
                     <div class="alert alert-danger mt-3" role="alert">
                       {{ error_message }}
@@ -89,6 +94,7 @@
 
         </div>
 
+        {# Toggle project completion state #}
         {% if project.status == 'open' %}
         <a href="{% url 'project_toggle_complete' project.id %}" class="btn btn-sm only-top-border success mt-4"
           onclick="if (!confirm('close this project?')) { this.blur(); return false; }">Mark as Completed</a>
@@ -104,6 +110,8 @@
     {% endif %}
   </div>
 </div>
+
+{# If there's a project deletion error, open the modal for that project automatically #}
 {% if error_project_id %}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -112,6 +120,7 @@
       var bsModal = new bootstrap.Modal(modal);
       bsModal.show();
 
+      // Remove error params from URL (for clean refresh)
       const url = new URL(window.location);
       url.searchParams.delete('error_project_id');
       url.searchParams.delete('error_message');

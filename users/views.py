@@ -6,7 +6,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 User = get_user_model()
 
-
+# View to handle user login
 @never_cache
 def login_view(request):
     login_form = CustomAuthenticationForm(request, data=request.POST or None)
@@ -16,19 +16,19 @@ def login_view(request):
         email = request.POST.get('username', '').strip().lower()
         password = request.POST.get('password', '')
 
-        # If no email or password, show generic error to avoid info leak
+        """ If no email or password, show generic error to avoid info leak """
         if not email or not password:
             messages.error(
                 request, "Please enter your registered email and password to login.")
         else:
-            # Check if user with email exists
+            """ Check if user with email exists """
             user_exists = User.objects.filter(email=email).exists()
 
             if not user_exists:
                 messages.error(
                     request, "There is no active account associated with the email address.")
             else:
-                # User exists, check password
+                """ User exists, check password """
                 user_auth = authenticate(
                     request, username=email, password=password)
                 if user_auth is not None:
@@ -47,7 +47,7 @@ def login_view(request):
     }
     return render(request, 'users/login.html', context)
 
-
+# View to handle user registration
 @never_cache
 def register_view(request):
     login_form = CustomAuthenticationForm(request)  # Blank form for display

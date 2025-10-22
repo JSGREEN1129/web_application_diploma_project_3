@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import never_cache
-from django.contrib import messages
-from django.urls import reverse
-from django.utils.http import urlencode
+from django.contrib.auth.decorators import login_required  # restricts view access to authenticated users.
+from django.views.decorators.cache import never_cache  # ensures views are not cached in the browser (important for dynamic data like task/project changes).
+from django.contrib import messages  # used to display user feedback (success/failure).
+from django.urls import reverse  # used for safe URL building and redirects.
+from django.utils.http import urlencode  # used for safe URL building and redirects.
 from .models import Project
 from .forms import ProjectForm
 
@@ -15,12 +15,12 @@ def project_create(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             new_project = form.save(commit=False)
-            new_project.owner = request.user
+            new_project.owner = request.user  # Assign the logged-in user as the owner
             new_project.save()
             messages.success(
                 request, f'Project "{new_project.name}" was created successfully!'
             )
-            return redirect("project_list")
+            return redirect("project_list")  # Redirect to project list on success
     else:
         form = ProjectForm()
 
@@ -34,11 +34,15 @@ def project_list(request):
     error_project_id = request.GET.get("error_project_id")
     error_message = request.GET.get("error_message")
 
+    # Get all projects belonging to the user
     projects = Project.objects.filter(
         owner=request.user).prefetch_related("tasks")
+    
+    # Filter by project status if specified
     if status_filter in ["open", "closed"]:
         projects = projects.filter(status=status_filter)
 
+    # Update task count attributes for display
     for project in projects:
         project.update_task_counts()
 
@@ -60,6 +64,7 @@ def project_detail(request, project_id):
 
     project.update_task_counts()
 
+    # Filter tasks by status if needed
     if status_filter == 'completed':
         tasks = project.tasks.filter(status='completed')
     elif status_filter == 'outstanding':
@@ -69,9 +74,11 @@ def project_detail(request, project_id):
     else:
         tasks = project.tasks.all().order_by('start_date')
 
+    # Update each task's status if needed
     for task in tasks:
         task.check_status()
 
+    # Extra task stats for UI display
     completed_count = tasks.filter(status='completed').count()
     outstanding_count = tasks.filter(status='outstanding').count()
     overdue_count = tasks.filter(status='overdue').count()
@@ -92,6 +99,8 @@ def project_detail(request, project_id):
 @never_cache
 def project_edit(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
+
+    # Support redirecting back to where user came from
     redirect_to = request.GET.get('next', reverse(
         'project_detail', kwargs={'project_id': project.id}))
 
@@ -116,6 +125,7 @@ def project_confirm_delete(request, project_id):
     if request.method == "POST":
         password = request.POST.get("password", "")
         if not request.user.check_password(password):
+            # Redirect with error message if password is incorrect
             error_message = "Incorrect password. Project not deleted."
             query_params = urlencode({
                 'error_project_id': project.id,
@@ -137,17 +147,21 @@ def project_toggle_complete(request, project_id):
     project = get_object_or_404(Project, id=project_id, owner=request.user)
 
     if project.status == "open":
+        # Store current task statuses before marking all complete
         task_statuses = {
             str(task.id): task.status for task in project.tasks.all()}
         project.previous_task_statuses = task_statuses
         project.status = "closed"
         project.save()
+
+        # Mark all tasks as completed
         project.tasks.update(status="completed")
 
         messages.success(
             request, f'Project "{project.name}" and all tasks marked as completed.'
         )
     else:
+        # Reopen project and restore original task statuses
         project.status = "open"
         project.save()
         prev_statuses = project.previous_task_statuses or {}

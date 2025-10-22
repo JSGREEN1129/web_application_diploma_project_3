@@ -1,8 +1,11 @@
 {% if messages %}
 <div class="container-fluid mt-2 mb-3 px-0">
+
+    {# Loop through messages, only displays the last looped messages #}
     {% for message in messages %}
     {% if forloop.last %}
-    <div class="alert 
+    <div class="alert
+        {# Determine the Bootstrap alert class based on message type or level #} 
         {% if message.tags %}alert-{{ message.tags }}
         {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger
         {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success
@@ -14,6 +17,7 @@
         alert-dismissible fade show" role="alert" id="main-message-alert">
 
         <div class="d-flex align-items-center">
+            {# Use Bootstrap icons based on message type #}
             <i class="bi {% if message.tags == 'success' or message.level == 25 %}bi-check-circle-fill text-success
                 {% elif message.tags == 'error' or message.level == 40 %}bi-exclamation-triangle-fill text-danger
                 {% elif message.tags == 'warning' or message.level == 30 %}bi-exclamation-circle-fill text-warning
@@ -49,15 +53,6 @@
         }
     }
 
-    /* Sticky top positioning option (uncomment if needed) */
-    /*
-.sticky-messages {
-    position: sticky;
-    top: 0;
-    z-index: 1040;
-    margin: 0;
-}
-*/
 </style>
 
 <script>
@@ -78,7 +73,6 @@
 
             // Listen for close event to remove from storage
             alertElement.addEventListener('closed.bs.alert', function () {
-                // Optional: You could add AJAX call to clear server-side messages
             });
         }
     });

@@ -5,9 +5,10 @@ from users.forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
-
+# Tests for the CustomUserCreationForm
 class CustomUserCreationFormTest(TestCase):
     def test_form_valid_data_creates_user(self):
+        """ Test that valid form data results in user creation """
         form_data = {
             'first_name': 'Alice',
             'last_name': 'Smith',
@@ -22,8 +23,10 @@ class CustomUserCreationFormTest(TestCase):
         self.assertEqual(User.objects.count(), 1)
 
     def test_form_raises_error_if_email_exists_on_save(self):
+        """ Setup: create an existing user with the email """
         User.objects.create_user(username='existinguser', email='duplicate@example.com', password='123456')
 
+        """ Attempt to register with the duplicate email """
         form_data = {
             'first_name': 'Bob',
             'last_name': 'Jones',
@@ -32,14 +35,16 @@ class CustomUserCreationFormTest(TestCase):
             'password2': 'Thisisthefirstpasswordfortesting'
         }
         form = CustomUserCreationForm(data=form_data)
-        self.assertTrue(form.is_valid()) 
+        self.assertTrue(form.is_valid())
 
+        """ Saving should raise ValidationError due to duplicate email """
         with self.assertRaises(ValidationError) as context:
             form.save()
 
         self.assertIn("A user with this email already exists.", str(context.exception))
 
     def test_form_invalid_password_mismatch(self):
+        """ Passwords do not match, form should be invalid """
         form_data = {
             'first_name': 'Charlie',
             'last_name': 'Brown',
@@ -51,12 +56,13 @@ class CustomUserCreationFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('password2', form.errors)
 
-
+# Tests for the CustomAuthenticationForm (login form)
 class CustomAuthenticationFormTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='user1', email='login@example.com', password='testpass123')
 
     def test_login_with_valid_credentials(self):
+        """ Form submission with correct email and password should be valid """
         form_data = {
             'username': 'login@example.com',
             'password': 'testpass123'
@@ -68,6 +74,7 @@ class CustomAuthenticationFormTest(TestCase):
         self.assertIsNotNone(user)
 
     def test_login_with_nonexistent_email(self):
+        """ Login attempt with email not in database should fail form validation """
         form_data = {
             'username': 'nonexistent@example.com',
             'password': 'whatever'
@@ -77,6 +84,7 @@ class CustomAuthenticationFormTest(TestCase):
         self.assertIn('No account found with this email.', form.errors['username'])
 
     def test_login_with_wrong_password(self):
+        """ Correct email but wrong password, form invalid with non-field errors """
         form_data = {
             'username': 'login@example.com',
             'password': 'wrongpass'

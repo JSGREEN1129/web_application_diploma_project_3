@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Page title using Django block -->
     <title>{% block title %}Project Management Systems{% endblock %}</title>
 
     <!-- Bootstrap -->
@@ -44,11 +45,12 @@
             <span class="text-xl p-2 me-4">Project Management Systems</span>
         </div>
     </nav>
+    <!-- Django messages -->
     {% include 'core/messages.html' %}
     <!-- Messages container with proper spacing from navbar -->
     <div id="messages-spacer" class="d-none"></div>
 
-    <!-- Page content -->
+    <!-- Main page content -->
     <main class="flex-grow-1">
         {% block content %}
         {% endblock %}

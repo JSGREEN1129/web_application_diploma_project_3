@@ -6,42 +6,54 @@
 
 {% block content %}
 <div class="container my-4">
+    {# Heading showing the project name for which the task is being created #}
     <h2>Create New Task for "{{ project.name }}"</h2>
 
     <div class="card mt-3 border-primary">
         <div class="card-body">
+            {# Task creation form with POST method #}
             <form method="POST">
                 {% csrf_token %}
+
+                {# Task Name Field #}
                 <div class="mb-3">
                     {{ form.name.label_tag }}
                     {{ form.name|add_class:"form-control" }}
                     {{ form.name.errors }}
                 </div>
 
+                {# Task Description Field #}
                 <div class="mb-3">
                     {{ form.description.label_tag }}
                     {{ form.description|add_class:"form-control" }}
                     {{ form.description.errors }}
                 </div>
 
+                {# Task Start Date Field #}
                 <div class="mb-3">
                     {{ form.start_date.label_tag }}
                     {{ form.start_date|add_class:"form-control" }}
                     {{ form.start_date.errors }}
                 </div>
 
+                {# Task End Date Field #}
                 <div class="mb-3">
                     {{ form.end_date.label_tag }}
                     {{ form.end_date|add_class:"form-control" }}
                     {{ form.end_date.errors }}
                 </div>
 
+                {# Task Status Field (e.g., outstanding, completed) #}
                 <div class="mb-3">
                     {{ form.status.label_tag }}
                     {{ form.status|add_class:"form-control" }}
                     {{ form.status.errors }}
                 </div>
+
+                {# Submit button to create the task #}
                 <button type="submit" class="btn btn-primary">Create Task</button>
+
+                {# Cancel button to go back to the project details page #}
                 <a href="{% url 'project_detail' project.id %}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>

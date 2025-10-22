@@ -1,46 +1,59 @@
 {% extends 'core/base_users.html' %}
+
+{# Load static files and widget_tweaks to style form inputs #}
 {% load static %}
 {% load widget_tweaks %}
 
+{# Page title using Django block #}
 {% block title %}Create Project{% endblock %}
 
+{# Main content block starts here #}
 {% block content %}
 <div class="container my-4">
     <h2>Create New Project</h2>
 
+    {# A Bootstrap card to visually wrap the project_create form #}
     <div class="card mt-3 border-primary">
         <div class="card-body">
+            {# Use POST method for secure data submission #}
             <form method="POST">
-                {% csrf_token %}
+                {% csrf_token %} {# CSRF protection for security #}
+
+                {# Form field: Project Name #}
                 <div class="mb-3">
                     {{ form.name.label_tag }}
                     {{ form.name|add_class:"form-control" }}
                     {{ form.name.errors }}
                 </div>
 
+                {# Form field: Project Description #}
                 <div class="mb-3">
                     {{ form.description.label_tag }}
                     {{ form.description|add_class:"form-control" }}
                     {{ form.description.errors }}
                 </div>
 
+                {# Form field: Start Date #}
                 <div class="mb-3">
                     {{ form.start_date.label_tag }}
                     {{ form.start_date|add_class:"form-control" }}
                     {{ form.start_date.errors }}
                 </div>
-
+                {# Form field: End Date #}
                 <div class="mb-3">
                     {{ form.end_date.label_tag }}
                     {{ form.end_date|add_class:"form-control" }}
                     {{ form.end_date.errors }}
                 </div>
 
+                {# Form field: Status (open or closed) #}
                 <div class="mb-3">
                     {{ form.status.label_tag }}
                     {{ form.status|add_class:"form-control" }}
                     {{ form.status.errors }}
                 </div>
+
+                {# Form buttons #}
                 <button type="submit" class="btn btn-primary">Create Project</button>
                 <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancel</a>
             </form>
