@@ -30,3 +30,21 @@ I've tested my deployed project on multiple browsers to check for compatibility 
 | Login and Register | ![screenshot](./lighthouse/mobile/pms-lighthouse-loginandregister-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-loginandregister-desktop.png) |
 | Projects | ![screenshot](./lighthouse/mobile/pms-lighthouse-projects-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-projects-desktop.png) |
 | Tasks | ![screenshot](./lighthouse/mobile/pms-lighthouse-tasks-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-tasks-desktop.png) |
+
+
+# Testing Report
+
+## Overview
+
+I used my created tests.py files to run application tests:
+
+- **Total tests run:** 38  
+- **Test duration:** ~50 seconds  
+- **Test result:** All tests passed (OK)  
+
+## Running Tests
+
+To run the tests I used the following command in the VSCODE terminal, while inside my project root folder:
+
+```bash
+python manage.py test -v2
