@@ -148,3 +148,37 @@ class UserViewTests(TestCase):
         response = self.client.post(reverse('login'), data=form_data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'No account found with this email.')
+
+# Security and access test code
+class SecurityAndAccessTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='secureuser',
+            email='secure@example.com',
+            password='SecurePass123!'
+        )
+
+    def test_protected_view_requires_login(self):
+        url = reverse('project_list')
+        
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
+    def test_logged_in_user_can_access_protected_view(self):
+        self.client.login(username=self.user.username, password='SecurePass123!')
+        url = reverse('project_list')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_logout_logs_out_user_and_redirects(self):
+        self.client.login(username=self.user.username, password='SecurePass123!')
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
+        response = self.client.get(reverse('project_list'))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
