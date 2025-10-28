@@ -42,6 +42,11 @@ I used my created tests.py files to run application tests:
 - **Test duration:** ~50 seconds  
 - **Test result:** All tests passed (OK)  
 
+## My tests.py files can be found on the following links :-
+- **Projects** [tests.py](./projects/tests.py)
+- **Tasks** [tests.py](./tasks/tests.py)
+- **Users** [tests.py](./users/tests.py)
+
 ## Running Tests
 
 To run the tests I used the following command in the VSCODE terminal, while inside my project root folder:
