@@ -52,7 +52,7 @@ I used my created tests.py files to run application tests:
 **You can view the full test report here:**
 | Function Test Report |
 | --- |
-| Html Report | ![screenshot](/documentation/test_reports/test_results_report_html_screenshots.png) |
+| Html Report | ![screenshot](./documentation/test_reports/test_results_report_html_screenshots.png) |
 
 ## Running Tests
 
