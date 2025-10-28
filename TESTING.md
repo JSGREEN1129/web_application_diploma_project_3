@@ -9,7 +9,7 @@ I've tested my deployed project to check for responsiveness issues.
 
 | Page | Mobile | Tablet | Desktop | Notes |
 | --- | --- | --- | --- | --- |
-| Homepage | ![screenshot](./responsive/pms-homepage-responsive-mobile.png) | ![screenshot](./responsive/pms-homepage-responsive-tablet.png) | ![screenshot](./responsive/pms-homepage-responsive-laptop.png) | Works as expected |
+| Homepage | ![screenshot](./documentation/responsive/pms-homepage-responsive-mobile.png) | ![screenshot](./responsive/pms-homepage-responsive-tablet.png) | ![screenshot](./responsive/pms-homepage-responsive-laptop.png) | Works as expected |
 | Login and Register | ![screenshot](./responsive/pms-login-register-responsive-mobile.png) | ![screenshot](./responsive/pms-login-register-responsive-tablet.png) | ![screenshot](./responsive/pms-login-register-responsive-laptop.png) | Works as expected |
 | Projects list | ![screenshot](./responsive/pms-projects-list-responsive-mobile.png) | ![screenshot](./responsive/pms-projects-list-responsive-tablet.png) | ![screenshot](./responsive/pms-projects-list-responsive-laptop.png) | Works as expected |
 
