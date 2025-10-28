@@ -9,9 +9,9 @@ I've tested my deployed project to check for responsiveness issues.
 
 | Page | Mobile | Tablet | Desktop | Notes |
 | --- | --- | --- | --- | --- |
-| Homepage | ![screenshot](./documentation/responsive/pms-homepage-responsive-mobile.png) | ![screenshot](./responsive/pms-homepage-responsive-tablet.png) | ![screenshot](./responsive/pms-homepage-responsive-laptop.png) | Works as expected |
-| Login and Register | ![screenshot](./responsive/pms-login-register-responsive-mobile.png) | ![screenshot](./responsive/pms-login-register-responsive-tablet.png) | ![screenshot](./responsive/pms-login-register-responsive-laptop.png) | Works as expected |
-| Projects list | ![screenshot](./responsive/pms-projects-list-responsive-mobile.png) | ![screenshot](./responsive/pms-projects-list-responsive-tablet.png) | ![screenshot](./responsive/pms-projects-list-responsive-laptop.png) | Works as expected |
+| Homepage | ![screenshot](./documentation/responsive/pms-homepage-responsive-mobile.png) | ![screenshot](./documentation/responsive/pms-homepage-responsive-tablet.png) | ![screenshot](./documentation/responsive/pms-homepage-responsive-laptop.png) | Works as expected |
+| Login and Register | ![screenshot](./documentation/responsive/pms-login-register-responsive-mobile.png) | ![screenshot](./documentation/responsive/pms-login-register-responsive-tablet.png) | ![screenshot](./documentation/responsive/pms-login-register-responsive-laptop.png) | Works as expected |
+| Projects list | ![screenshot](./documentation/responsive/pms-projects-list-responsive-mobile.png) | ![screenshot](./documentation/responsive/pms-projects-list-responsive-tablet.png) | ![screenshot](./documentation/responsive/pms-projects-list-responsive-laptop.png) | Works as expected |
 
 ## Browser Compatibility
 
@@ -19,17 +19,17 @@ I've tested my deployed project on multiple browsers to check for compatibility 
 
 | Browser | Homepage | Login/Register | Projects |
 | --- | --- | --- | --- |
-| Google | ![screenshot](./browser/google.png) | ![screenshot](./browser/google-login.png) | ![screenshot](./browser/google-projects.png) | Works as expected |
-| Firefox | ![screenshot](./browser/firefox.png) | ![screenshot](./browser/firefox-login.png) | ![screenshot](./browser/firefox-projects.png) | Works as expected |
+| Google | ![screenshot](./documentation/browser/google.png) | ![screenshot](./documentation/browser/google-login.png) | ![screenshot](./documentation/browser/google-projects.png) | Works as expected |
+| Firefox | ![screenshot](./documentation/browser/firefox.png) | ![screenshot](./documentation/browser/firefox-login.png) | ![screenshot](./documentation/browser/firefox-projects.png) | Works as expected |
 
 ## Lighthouse Audit
 
 | Page | Mobile | Desktop |
 | --- | --- | --- |
-| Homepage | ![screenshot](./lighthouse/mobile/pms-lighthouse-homepage-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-homepage-desktop.png) |
-| Login and Register | ![screenshot](./lighthouse/mobile/pms-lighthouse-loginandregister-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-loginandregister-desktop.png) |
-| Projects | ![screenshot](./lighthouse/mobile/pms-lighthouse-projects-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-projects-desktop.png) |
-| Tasks | ![screenshot](./lighthouse/mobile/pms-lighthouse-tasks-mobile.png) | ![screenshot](./lighthouse/desktop/pms-lighthouse-tasks-desktop.png) |
+| Homepage | ![screenshot](./documentation/lighthouse/mobile/pms-lighthouse-homepage-mobile.png) | ![screenshot](./documentation/lighthouse/desktop/pms-lighthouse-homepage-desktop.png) |
+| Login and Register | ![screenshot](./documentation/lighthouse/mobile/pms-lighthouse-loginandregister-mobile.png) | ![screenshot](./documentation/lighthouse/desktop/pms-lighthouse-loginandregister-desktop.png) |
+| Projects | ![screenshot](./documentation/lighthouse/mobile/pms-lighthouse-projects-mobile.png) | ![screenshot](./documentation/lighthouse/desktop/pms-lighthouse-projects-desktop.png) |
+| Tasks | ![screenshot](./documentation/lighthouse/mobile/pms-lighthouse-tasks-mobile.png) | ![screenshot](./documentation/lighthouse/desktop/pms-lighthouse-tasks-desktop.png) |
 
 
 # Testing Report
