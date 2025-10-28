@@ -47,6 +47,12 @@ I used my created tests.py files to run application tests:
 - **Tasks** [tests.py](./tasks/tests.py)
 - **Users** [tests.py](./users/tests.py)
 
+# Test Reports
+
+**You can view the full test report here:**
+
+[View Full HTML Test Report](documentation/test_reports/test_results_report.html)
+
 ## Running Tests
 
 To run the tests I used the following command in the VSCODE terminal, while inside my project root folder:
