@@ -5,7 +5,7 @@
 
 ### Python
 
-I have used the  [PEP8 Code Institute Validator](https://pep8ci.herokuapp.com/) to validate all of my py files.
+I have used the [PEP8 Code Institute Validator](https://pep8ci.herokuapp.com/) to validate all of my py files.
 
 | Directory | File | URL | Screenshot |
 | --- | --- | --- | --- |
@@ -27,6 +27,17 @@ I have used the  [PEP8 Code Institute Validator](https://pep8ci.herokuapp.com/) 
 | users | users-tests.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_tests_CI_linted.png) |
 | users | users-urls.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_urls_CI_linted.png) |
 | users | users-views.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_views_CI_linted.png) |
+
+### CSS
+
+I have used the [CSS Jigsaw Validator](https://jigsaw.w3.org/css-validator) to validate all of my CSS files.
+
+| Directory | File | URL | Screenshot |
+| --- | --- | --- | --- |
+| static | assets/stylesheets/authentication.css | --- | ![screenshot](./documentation/test_reports/stylesheets_linted/css_authentication_w3c_linted.png) |
+| static | assets/stylesheets/base.css | --- | ![screenshot](./documentation/test_reports/stylesheets_linted/css_base_w3c_linted.png) |
+| static | assets/stylesheets/components.css | --- | ![screenshot](./documentation/test_reports/stylesheets_linted/css_components_w3c_linted.png) |
+| static | assets/stylesheets/homepage.css | --- | ![screenshot](./documentation/test_reports/stylesheets_linted/css_homepage_w3c_linted.png) |
 
 ## Responsiveness
 
