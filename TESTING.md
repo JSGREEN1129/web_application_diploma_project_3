@@ -47,9 +47,9 @@ I used my created tests.py files to run application tests:
 - **Tasks** [tests.py](./tasks/tests.py)
 - **Users** [tests.py](./users/tests.py)
 
-## Test Reports
+# Test Reports
 
-# I have wrote separate functionality tests to test all the buttons in the project, task and user apps.
+## I have wrote separate functionality tests to test all the buttons in the project, task and user apps.
 
 **You can view the full test report here:**
 | Function Test Report | Screenshot |
