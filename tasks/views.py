@@ -30,7 +30,8 @@ def task_create(request, project_id):
     else:
         form = TaskForm()
 
-    return render(request, 'tasks/task_create.html', {'form': form, 'project': project})
+    return render(request, 'tasks/task_create.html',
+                  {'form': form, 'project': project})
 
 
 @login_required
@@ -40,7 +41,8 @@ def task_detail(request, task_id):
 
     task.check_status()  # Refresh status before showing
 
-    error_task_id = request.GET.get('error_task_id', '')  # Used for modal error re-display
+    # Used for modal error re-display
+    error_task_id = request.GET.get('error_task_id', '')
 
     return render(request, 'tasks/task_detail.html', {
         'task': task,
@@ -69,7 +71,9 @@ def task_edit(request, task_id):
     else:
         form = TaskEditForm(instance=task)
 
-    return render(request, 'tasks/task_edit.html', {'form': form, 'task': task, 'project': project, 'next': redirect_to})
+    return render(request, 'tasks/task_edit.html',
+                  {'form': form, 'task': task,
+                   'project': project, 'next': redirect_to})
 
 
 @login_required
@@ -118,7 +122,8 @@ def task_toggle_complete(request, task_id):
 
     if task.status == 'completed':
         # Revert to previous or default to 'outstanding'
-        prev_status = task.previous_status if task.previous_status else 'outstanding'
+        prev_status = (task.previous_status
+                       if task.previous_status else 'outstanding')
         task.status = prev_status
         task.previous_status = None
         task.check_status()
@@ -129,7 +134,10 @@ def task_toggle_complete(request, task_id):
             project.status = 'open'
             project.save()
             messages.info(
-                request, f"Project '{project.name}' was reopened due to current tasks open and outstanding.")
+                request,
+                (f"Project '{project.name}'"
+                 "was reopened due to current tasks open and outstanding.")
+            )
 
         messages.success(request, f"Task '{task.name}' reopened.")
 

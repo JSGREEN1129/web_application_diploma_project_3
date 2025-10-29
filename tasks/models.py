@@ -11,10 +11,11 @@ class Task(models.Model):
         ('overdue', 'Overdue'),
     ]
 
-    # ForeignKey to Project, establishing a relationship; deleting project deletes its tasks
+    # ForeignKey to Project, establishing a relationship;
+    # deleting project deletes its tasks
     project = models.ForeignKey(
         Project, related_name='tasks', on_delete=models.CASCADE)
-    
+
     # Task name, max length 200 characters
     name = models.CharField(max_length=200)
 
@@ -28,11 +29,11 @@ class Task(models.Model):
     # Current status of the task, defaults to 'outstanding'
     status = models.CharField(
         max_length=11, choices=STATUS_CHOICES, default='outstanding')
-    
+
     # Stores previous status, useful for toggling or restoring status
     previous_status = models.CharField(
         max_length=11, choices=STATUS_CHOICES, null=True, blank=True)
-    
+
     # Timestamp for when task was completed, optional
     completed_at = models.DateTimeField(null=True, blank=True)
 
@@ -60,7 +61,8 @@ class Task(models.Model):
     def toggle_complete(self):
         """
         Toggles completion state:
-        - If currently 'completed', revert to 'outstanding' or 'overdue' based on end_date.
+        - If currently 'completed', revert to 'outstanding'
+        or 'overdue' based on end_date.
         - If not completed, mark as 'completed' and set completed_at to now.
         Saves the updated state.
         """

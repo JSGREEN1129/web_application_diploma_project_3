@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from playwright.sync_api import Page
 
+
 @pytest.mark.django_db
 def test_register_create_edit_delete_task(live_server, page: Page):
     """
@@ -40,7 +41,8 @@ def test_register_create_edit_delete_task(live_server, page: Page):
     # -------------------- CREATE PROJECT --------------------
     page.get_by_role("link", name="+ New Project").click()
     page.wait_for_selector("h2", state="visible")
-    assert "Create" in page.text_content("h2"), "Not on the create project page"
+    assert "Create" in page.text_content(
+        "h2"), "Not on the create project page"
 
     project_name = "Playwright Project"
     page.fill('input[name="name"]', project_name)
@@ -67,13 +69,15 @@ def test_register_create_edit_delete_task(live_server, page: Page):
 
     task_name = "Playwright Task"
     page.fill('input[name="name"]', task_name)
-    page.fill('textarea[name="description"]', "Task created via Playwright test")
+    page.fill('textarea[name="description"]',
+              "Task created via Playwright test")
     page.fill('input[name="start_date"]', "2026-10-29")
     page.fill('input[name="end_date"]', "2026-11-10")
     page.select_option('select[name="status"]', "outstanding")
     page.click('button[type="submit"]')
 
-    page.wait_for_selector(f'div.card:has-text("{task_name}")', state="visible")
+    page.wait_for_selector(
+        f'div.card:has-text("{task_name}")', state="visible")
     assert task_name in page.content(), "Task not found on project detail page"
 
     # -------------------- EDIT TASK --------------------
@@ -85,17 +89,20 @@ def test_register_create_edit_delete_task(live_server, page: Page):
     page.fill('input[name="name"]', new_task_name)
     page.click('button[type="submit"]')
 
-    page.wait_for_selector(f'div.card:has-text("{new_task_name}")', state="visible")
+    page.wait_for_selector(
+        f'div.card:has-text("{new_task_name}")', state="visible")
     assert new_task_name in page.content(), "Task update failed"
 
     # -------------------- COMPLETE TASK --------------------
     task_card = page.locator("div.card", has_text=new_task_name)
     complete_button = task_card.get_by_role("link", name="Complete")
-    page.once("dialog", lambda dialog: dialog.accept())  # accept confirm dialog
+    # accept confirm dialog
+    page.once("dialog", lambda dialog: dialog.accept())
     complete_button.click()
 
     # Wait for "Completed" badge to appear
-    task_card.locator('span.badge:has-text("Completed")').wait_for(state="visible")
+    task_card.locator(
+        'span.badge:has-text("Completed")').wait_for(state="visible")
     assert task_card.locator('span.badge:has-text("Completed")').is_visible()
 
     # -------------------- FILTER TASKS --------------------
@@ -105,7 +112,8 @@ def test_register_create_edit_delete_task(live_server, page: Page):
     # Wait for the completed task to appear
     completed_task_card = page.locator(f'div.card:has-text("{new_task_name}")')
     completed_task_card.wait_for(state="visible", timeout=10000)
-    assert completed_task_card.locator('span.badge:has-text("Completed")').is_visible()
+    assert completed_task_card.locator(
+        'span.badge:has-text("Completed")').is_visible()
 
     # -------------------- BACK TO PROJECTS --------------------
     page.get_by_role("link", name="Back to Projects").click()
@@ -122,7 +130,8 @@ def test_register_create_edit_delete_task(live_server, page: Page):
     all_tasks_link = page.get_by_role("link", name="All")
     if all_tasks_link.is_visible():
         all_tasks_link.click()
-        page.wait_for_selector(f'div.card:has-text("{new_task_name}")', state="visible")
+        page.wait_for_selector(
+            f'div.card:has-text("{new_task_name}")', state="visible")
 
     # Locate the task card
     task_card = page.locator(f'div.card:has-text("{new_task_name}")')
@@ -134,7 +143,8 @@ def test_register_create_edit_delete_task(live_server, page: Page):
     delete_button.click()
 
     # Wait for the modal to appear
-    modal = page.locator('#deleteTaskModal1')  # adjust selector if your modal ID is different
+    # adjust selector if your modal ID is different
+    modal = page.locator('#deleteTaskModal1')
     modal.wait_for(state="visible", timeout=5000)
 
     # Fill the password inside the modal

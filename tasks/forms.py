@@ -12,16 +12,19 @@ class TaskForm(forms.ModelForm):
             'start_date': forms.DateInput(attrs={
                 'type': 'date',
                 'class': 'form-control',
-                'min': timezone.now().date().isoformat()  # Prevent selecting past dates
+                'min': timezone.now().date().isoformat()
+                # Prevent selecting past dates
             }),
             'end_date': forms.DateInput(attrs={
                 'type': 'date',
                 'class': 'form-control',
-                'min': timezone.now().date().isoformat()  # Prevent selecting past dates
+                'min': timezone.now().date().isoformat()
+                # Prevent selecting past dates
             }),
             # Styling the input fields with Bootstrap classes
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'description': forms.Textarea
+            (attrs={'class': 'form-control', 'rows': 5}),
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
 
@@ -75,14 +78,16 @@ class TaskEditForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'description': forms.Textarea
+            (attrs={'class': 'form-control', 'rows': 5}),
         }
 
     def clean_end_date(self):
         """
         Custom validation for end_date during task edit:
         - end_date cannot be before start_date
-        - end_date cannot be in the past if the task is still active (i.e., not completed)
+        - end_date cannot be in the past if
+        the task is still active (i.e., not completed)
         """
         end_date = self.cleaned_data.get('end_date')
         start_date = self.cleaned_data.get('start_date')

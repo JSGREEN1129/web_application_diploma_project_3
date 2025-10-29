@@ -5,13 +5,15 @@ from django.contrib.auth.models import User
 from projects.models import Project
 from tasks.models import Task
 
+
 class TaskModelTests(TestCase):
     def setUp(self):
         """
         Set up a user and a test project before each test.
         This ensures every test has access to a valid user and project.
         """
-        self.user = User.objects.create_user(username='tester', password='pass')
+        self.user = User.objects.create_user(
+            username='tester', password='pass')
         self.project = Project.objects.create(
             name='Test Project',
             description='For task tests',
@@ -38,13 +40,16 @@ class TaskModelTests(TestCase):
         Test default values of a newly created task.
         """
         task = self.create_task()
-        self.assertEqual(task.status, 'outstanding')  # Default status should be 'outstanding'
+        # Default status should be 'outstanding'
+        self.assertEqual(task.status, 'outstanding')
         self.assertIsNone(task.completed_at)  # Task should not be completed
-        self.assertEqual(task.project, self.project)  # Should be assigned to the correct project
+        # Should be assigned to the correct project
+        self.assertEqual(task.project, self.project)
 
     def test_check_status_sets_overdue_if_past_due(self):
         """
-        If task end date is in the past and it's not completed, status should become 'overdue'.
+        If task end date is in the past and it's not completed,
+        status should become 'overdue'.
         """
         task = self.create_task(end_date=date.today() - timedelta(days=1))
         task.check_status()
@@ -71,7 +76,8 @@ class TaskModelTests(TestCase):
 
     def test_check_status_with_no_end_date_sets_outstanding(self):
         """
-        If no end date is provided and the task is not completed, it should be set to 'outstanding'.
+        If no end date is provided and the task is not completed,
+        it should be set to 'outstanding'.
         """
         task = self.create_task(end_date=None)
         task.status = 'overdue'
@@ -81,7 +87,8 @@ class TaskModelTests(TestCase):
 
     def test_toggle_complete_marks_as_completed(self):
         """
-        When toggling from 'outstanding' to 'completed', the status and completed_at timestamp should update.
+        When toggling from 'outstanding' to 'completed',
+        the status and completed_at timestamp should update.
         """
         task = self.create_task(status='outstanding')
         task.toggle_complete()
@@ -116,12 +123,14 @@ class TaskModelTests(TestCase):
         self.assertEqual(task.status, 'outstanding')
         self.assertIsNone(task.completed_at)
 
-    def test_toggle_complete_from_completed_sets_outstanding_if_no_end_date(self):
+    def test_toggle_complete_from_completed_sets_outstanding_if_no_end_date(
+            self):
         """
         When a completed task has no end date and is toggled,
         it should become 'outstanding'.
         """
-        task = self.create_task(status='completed', completed_at=timezone.now(), end_date=None)
+        task = self.create_task(
+            status='completed', completed_at=timezone.now(), end_date=None)
         task.toggle_complete()
         self.assertEqual(task.status, 'outstanding')
         self.assertIsNone(task.completed_at)
