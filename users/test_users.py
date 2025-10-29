@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from playwright.sync_api import Page, expect
 
+
 @pytest.mark.django_db
 def test_users(live_server, page: Page):
     """
@@ -26,7 +27,7 @@ def test_users(live_server, page: Page):
     register_content = page.locator('#pills-register')
     expect(register_content).to_be_visible(timeout=5000)
 
-    # Now fill inputs safely
+    # Fill inputs
     first_name_input = register_content.locator('input[name="first_name"]')
     last_name_input = register_content.locator('input[name="last_name"]')
     email_input = register_content.locator('input[name="email"]')
@@ -35,13 +36,14 @@ def test_users(live_server, page: Page):
 
     # Wait until each input is visible before filling
     for input_field, value in zip(
-        [first_name_input, last_name_input, email_input, password1_input, password2_input],
-        [first_name, last_name, email, password, password]
+        [first_name_input, last_name_input,
+         email_input, password1_input, password2_input],
+        [first_name, last_name, email, password, password],
     ):
         expect(input_field).to_be_visible(timeout=5000)
         input_field.scroll_into_view_if_needed()
         input_field.fill(value)
-    
+
     # Click register button
     register_btn = page.locator('button[name="register_submit"]')
     expect(register_btn).to_be_enabled(timeout=5000)
@@ -49,16 +51,23 @@ def test_users(live_server, page: Page):
 
     # Confirm auto-login: redirected to projects page
     page.wait_for_url(f"{live_server.url}{reverse('project_list')}")
-    assert "Projects" in page.content(), "User was not logged in automatically after registration"
-    assert first_name in page.content(), "Logged-in user's name not displayed after registration"
+    assert (
+        "Projects" in page.content()
+    ), "User was not logged in automatically after registration"
+
+    assert (
+        first_name in page.content()
+    ), "Logged-in user's name not displayed after registration"
 
     # -------------------- LOGOUT --------------------
     logout_link = page.get_by_role("link", name="Logout")
     expect(logout_link).to_be_visible(timeout=5000)
     logout_link.click()
-    
+
     page.wait_for_url(f"{live_server.url}{reverse('login')}")
-    assert "Login" in page.content(), "Logout failed or did not redirect to login page"
+    assert (
+        "Login" in page.content()
+    ), "Logout failed or did not redirect to login page"
 
     # -------------------- LOGIN --------------------
     username_input = page.locator('input[name="username"]')
@@ -74,5 +83,11 @@ def test_users(live_server, page: Page):
     login_btn.click()
 
     page.wait_for_url(f"{live_server.url}{reverse('project_list')}")
-    assert "Projects" in page.content(), "Login failed with the newly created user"
-    assert first_name in page.content(), "Logged-in user's name not displayed after login"
+
+    assert (
+        "Projects" in page.content()
+    ), "Login failed with the newly created user"
+
+    assert (
+        first_name in page.content()
+    ), "Logged-in user's name not displayed after login"
