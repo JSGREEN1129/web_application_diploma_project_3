@@ -50,8 +50,8 @@ I used my created tests.py files to run application tests:
 # Test Reports
 
 **You can view the full test report here:**
-| Function Test Report |
-| --- |
+| Function Test Report | Screenshot |
+| --- | --- |
 | Html Report | ![screenshot](./documentation/test_reports/test_results_report_html_screenshots.png) |
 
 ## Running Tests
