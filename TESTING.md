@@ -88,9 +88,9 @@ I used my created tests.py files to run application tests:
 I have wrote separate functionality tests to test all the buttons in the project, task and user apps.
 
 ## My test_projects_buttons.py, test_tasks_buttons.py and test_users.py files can be found on the following links :-
-- **Projects** [tests.py](./projects/test_projects_buttons.py)
-- **Tasks** [tests.py](./tasks/test_tasks_buttons.py)
-- **Users** [tests.py](./users/test_users.py)
+- **Projects** [test_projects_buttons.py](./projects/test_projects_buttons.py)
+- **Tasks** [test_tasks_buttons.py](./tasks/test_tasks_buttons.py)
+- **Users** [test_users.py](./users/test_users.py)
 
 **You can view the full test report here:**
 | Function Test Report | Screenshot |
