@@ -5,11 +5,14 @@ from projects.models import Project
 from datetime import date, timedelta
 from django.utils.http import urlencode
 
+
 class ProjectViewTests(TestCase):
     def setUp(self):
         # Create two users
-        self.user = User.objects.create_user('user', 'user@example.com', 'pass')
-        self.other_user = User.objects.create_user('other', 'other@example.com', 'pass2')
+        self.user = User.objects.create_user(
+            'user', 'user@example.com', 'pass')
+        self.other_user = User.objects.create_user(
+            'other', 'other@example.com', 'pass2')
 
         # Log in as the main user
         self.client.login(username='user', password='pass')
@@ -58,14 +61,16 @@ class ProjectViewTests(TestCase):
         data = self.project_data()
         response = self.client.post(reverse('project_create'), data)
         self.assertRedirects(response, reverse('project_list'))
-        self.assertTrue(Project.objects.filter(name='New Project', owner=self.user).exists())
+        self.assertTrue(Project.objects.filter(
+            name='New Project', owner=self.user).exists())
 
     def test_project_create_post_invalid(self):
         """Invalid POST (e.g., missing name) should return form errors."""
         data = self.project_data({'name': ''})
         response = self.client.post(reverse('project_create'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'name', 'This field is required.')
+        self.assertFormError(response, 'form', 'name',
+                             'This field is required.')
 
     def test_project_list_shows_only_user_projects(self):
         """User should only see their own projects in the list view."""
@@ -76,45 +81,56 @@ class ProjectViewTests(TestCase):
 
     def test_project_detail_owner_access(self):
         """Project owner should be able to view their project detail page."""
-        response = self.client.get(reverse('project_detail', args=[self.project.id]))
+        response = self.client.get(
+            reverse('project_detail', args=[self.project.id]))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['project'], self.project)
 
     def test_project_detail_forbidden_to_other_user(self):
         """Users should not be able to view other users' project details."""
-        response = self.client.get(reverse('project_detail', args=[self.other_project.id]))
+        response = self.client.get(
+            reverse('project_detail', args=[self.other_project.id]))
         self.assertEqual(response.status_code, 404)
 
     def test_project_edit_get(self):
-        """GET request to edit should load the form with current project data."""
-        response = self.client.get(reverse('project_edit', args=[self.project.id]))
+        """GET request to edit should load
+            the form with current project data."""
+        response = self.client.get(
+            reverse('project_edit', args=[self.project.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'projects/project_edit.html')
 
     def test_project_edit_post_valid(self):
         """Valid POST should update the project and redirect to detail."""
         data = self.project_data({'name': 'Updated Project'})
-        response = self.client.post(reverse('project_edit', args=[self.project.id]), data)
+        response = self.client.post(
+            reverse('project_edit', args=[self.project.id]), data)
         self.project.refresh_from_db()
         self.assertEqual(self.project.name, 'Updated Project')
-        self.assertRedirects(response, reverse('project_detail', kwargs={'project_id': self.project.id}))
+        self.assertRedirects(response, reverse(
+            'project_detail', kwargs={'project_id': self.project.id}))
 
     def test_project_edit_post_invalid(self):
         """Invalid data should keep user on form page with errors."""
         data = self.project_data({'name': ''})
-        response = self.client.post(reverse('project_edit', args=[self.project.id]), data)
+        response = self.client.post(
+            reverse('project_edit', args=[self.project.id]), data)
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'name', 'This field is required.')
+        self.assertFormError(response, 'form', 'name',
+                             'This field is required.')
 
     def test_project_delete_with_correct_password(self):
         """Correct password should delete the project."""
-        response = self.client.post(reverse('project_confirm_delete', args=[self.project.id]), {'password': 'pass'})
+        response = self.client.post(reverse('project_confirm_delete', args=[
+                                    self.project.id]), {'password': 'pass'})
         self.assertRedirects(response, reverse('project_list'))
         self.assertFalse(Project.objects.filter(id=self.project.id).exists())
 
     def test_project_delete_with_wrong_password(self):
-        """Wrong password should not delete the project and return error message."""
-        response = self.client.post(reverse('project_confirm_delete', args=[self.project.id]), {'password': 'wrong'})
+        """Wrong password should not delete
+            the project and return error message."""
+        response = self.client.post(reverse('project_confirm_delete', args=[
+                                    self.project.id]), {'password': 'wrong'})
         expected_url = reverse('project_list') + '?' + urlencode({
             'error_project_id': self.project.id,
             'error_message': 'Incorrect password. Project not deleted.'
@@ -127,7 +143,8 @@ class ProjectViewTests(TestCase):
         task1 = self.project.tasks.create(name='Task 1', status='outstanding')
         task2 = self.project.tasks.create(name='Task 2', status='outstanding')
 
-        response = self.client.get(reverse('project_toggle_complete', args=[self.project.id]))
+        response = self.client.get(
+            reverse('project_toggle_complete', args=[self.project.id]))
         self.project.refresh_from_db()
         task1.refresh_from_db()
         task2.refresh_from_db()
@@ -149,7 +166,8 @@ class ProjectViewTests(TestCase):
         }
         self.project.save()
 
-        response = self.client.get(reverse('project_toggle_complete', args=[self.project.id]))
+        response = self.client.get(
+            reverse('project_toggle_complete', args=[self.project.id]))
         self.project.refresh_from_db()
         task1.refresh_from_db()
         task2.refresh_from_db()
@@ -159,7 +177,8 @@ class ProjectViewTests(TestCase):
         self.assertEqual(task2.status, 'outstanding')
 
     def test_protected_views_redirect_anonymous(self):
-        """Anonymous users should be redirected to login for protected views."""
+        """Anonymous users should be redirected
+            to login for protected views."""
         self.client.logout()
         protected_urls = [
             reverse('project_create'),

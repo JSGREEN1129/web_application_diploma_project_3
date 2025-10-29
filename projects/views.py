@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required  # restricts view access to authenticated users.
-from django.views.decorators.cache import never_cache  # ensures views are not cached in the browser (important for dynamic data like task/project changes).
-from django.contrib import messages  # used to display user feedback (success/failure).
+# restricts view access to authenticated users.
+from django.contrib.auth.decorators import login_required
+# ensures views are not cached in the browser
+# (important for dynamic data like task/project changes).
+from django.views.decorators.cache import never_cache
+# used to display user feedback (success/failure).
+from django.contrib import messages
 from django.urls import reverse  # used for safe URL building and redirects.
-from django.utils.http import urlencode  # used for safe URL building and redirects.
+# used for safe URL building and redirects.
+from django.utils.http import urlencode
 from .models import Project
 from .forms import ProjectForm
 
@@ -15,12 +20,15 @@ def project_create(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             new_project = form.save(commit=False)
-            new_project.owner = request.user  # Assign the logged-in user as the owner
+            new_project.owner = request.user
+            # Assign the logged-in user as the owner
             new_project.save()
             messages.success(
-                request, f'Project "{new_project.name}" was created successfully!'
+                request,
+                f'Project "{new_project.name}" was created successfully!'
             )
-            return redirect("project_list")  # Redirect to project list on success
+            # Redirect to project list on success
+            return redirect("project_list")
     else:
         form = ProjectForm()
 
@@ -37,7 +45,7 @@ def project_list(request):
     # Get all projects belonging to the user
     projects = Project.objects.filter(
         owner=request.user).prefetch_related("tasks")
-    
+
     # Filter by project status if specified
     if status_filter in ["open", "closed"]:
         projects = projects.filter(status=status_filter)
@@ -114,7 +122,8 @@ def project_edit(request, project_id):
     else:
         form = ProjectForm(instance=project)
 
-    return render(request, 'projects/project_edit.html', {'form': form, 'project': project, 'next': redirect_to})
+    return render(request, 'projects/project_edit.html',
+                  {'form': form, 'project': project, 'next': redirect_to})
 
 
 @login_required
@@ -158,7 +167,8 @@ def project_toggle_complete(request, project_id):
         project.tasks.update(status="completed")
 
         messages.success(
-            request, f'Project "{project.name}" and all tasks marked as completed.'
+            request,
+            f'Project "{project.name}" and all tasks marked as completed.'
         )
     else:
         # Reopen project and restore original task statuses

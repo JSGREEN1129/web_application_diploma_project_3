@@ -32,14 +32,16 @@ def test_register_and_create_project(live_server, page):
     page.click('button[name="register_submit"]')
 
     page.wait_for_url(f"{live_server.url}{reverse('project_list')}")
-    assert "Projects" in page.content(), "Project list page did not load after registration/login"
+    assert "Projects" in page.content(
+    ), "Project list page did not load after registration/login"
 
     # --- CREATE PROJECT ---
     page.wait_for_selector('text="+ New Project"', state='visible')
     page.get_by_role("link", name="+ New Project", exact=False).click()
 
     page.wait_for_selector("h2", state="visible")
-    assert "Create" in page.text_content("h2"), "Not on the create project page"
+    assert "Create" in page.text_content(
+        "h2"), "Not on the create project page"
 
     page.fill('input[name="name"]', "Playwright Project")
     page.fill('textarea[name="description"]', "Created via Playwright test")
@@ -50,18 +52,20 @@ def test_register_and_create_project(live_server, page):
 
     # Verify creation success
     page.wait_for_url(f"{live_server.url}{reverse('project_list')}")
-    assert "Playwright Project" in page.content(), "New project not found on list page"
+    assert "Playwright Project" in page.content(), "New project not found"
 
     # --- FILTER BUTTONS ---
     page.click('a[href="?status=open"]')
     page.wait_for_timeout(500)
-    assert "Playwright Project" in page.content(), "Project missing in 'Open Projects' filter"
+    assert "Playwright Project" in page.content(
+    ), "Project missing in 'Open Projects' filter"
 
     page.click('a[href="?status=closed"]')
     page.wait_for_timeout(500)
     page.click('a[href="?status=all"]')
     page.wait_for_timeout(500)
-    assert "Playwright Project" in page.content(), "Project missing in 'All Projects' filter"
+    assert "Playwright Project" in page.content(
+    ), "Project missing in 'All Projects' filter"
 
     # --- EDIT PROJECT ---
     page.get_by_role("link", name="Edit", exact=False).click()
@@ -79,19 +83,25 @@ def test_register_and_create_project(live_server, page):
 
     # Wait for redirect back to project list
     page.wait_for_url(f"{live_server.url}{reverse('project_list')}")
-    assert "Updated via Playwright test" or "Playwright Project" in page.content()
+    assert (
+        "Updated via Playwright test" in page.content()
+        or "Playwright Project" in page.content()
+    )
 
     # --- MARK AS COMPLETED ---
     if page.is_visible('a:has-text("Mark as Completed")'):
         page.get_by_role("link", name="Mark as Completed", exact=False).click()
         page.wait_for_timeout(1000)
-        assert "Closed" in page.content() or "Re-open Project" in page.content(), "Failed to mark project as completed"
+        assert ("Closed" in page.content(
+        ) or "Re-open Project" in page.content(),
+            "Failed to mark project as completed")
 
     # --- REOPEN PROJECT ---
     if page.is_visible('a:has-text("Re-open Project")'):
         page.get_by_role("link", name="Re-open Project", exact=False).click()
         page.wait_for_timeout(1000)
-        assert "Open" in page.content() or "Mark as Completed" in page.content(), "Failed to reopen project"
+        assert "Open" in page.content(
+        ) or "Mark as Completed" in page.content(), "Failed to reopen project"
 
     # --- DELETE PROJECT ---
     # Click Delete button to open modal
@@ -106,11 +116,14 @@ def test_register_and_create_project(live_server, page):
     html = page.content()
 
     # Allow it to appear in success messages but not in actual project entries
-    assert "Project 'Playwright Project' deleted successfully!" in html, "Delete success message missing"
+    assert (
+        "Project 'Playwright Project' deleted successfully!" in html,
+        "Delete success message missing",
+    )
 
     # Ensure it's not listed as a project anymore
     project_rows = page.query_selector_all("div.row, table, li, a, p")
     visible_text = [el.inner_text() for el in project_rows]
-    assert not any("Playwright Project" in t for t in visible_text if "deleted successfully" not in t), \
-    "Project still visible in project list after deletion"
-
+    assert not any("Playwright Project" in t for t in
+                   visible_text if "deleted successfully" not in t), \
+        "Project still visible in project list after deletion"

@@ -17,12 +17,13 @@ class Project(models.Model):
 
     # Reference to the user who owns the project
     owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='projects') # If the user is deleted, delete their projects too
-    
+        # If the user is deleted, delete their projects too
+        User, on_delete=models.CASCADE, related_name='projects')
+
     # Status of the project - 'open' or 'closed'
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default='open')
-    
+
     # Start and end dates for the project
     start_date = models.DateField()
     end_date = models.DateField()
