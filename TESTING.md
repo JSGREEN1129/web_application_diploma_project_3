@@ -3,6 +3,31 @@
 > [!NOTE]
 > Return back to the [README.md](/README.md) file.
 
+### Python
+
+I have used the  [PEP8 Code Institute Validator](https://pep8ci.herokuapp.com/) to validate all of my py files.
+
+| Directory | File | URL | Screenshot |
+| --- | --- | --- | --- |
+| projects | projects-forms.py | --- | ![screenshot](./documentation/test_reports/projects_app_linted/projects_forms_CI_linted.png) |
+| projects | projects-models.py | --- | ![screenshot](./documentation/test_reports/projects_app_linted/projects_models_CI_linted.png) |
+| projects | projects-test_projects_buttons.py | --- | ![screenshot](./documentation/test_reports/projects_app_linted/projects_test_project_buttons_CI_linted.png) |
+| projects | projects-tests.py | --- | ![screenshot](./documentation/test_reports/projects_app_linted/projects_tests_CI_linted.png) |
+| projects | projects-urls.py | --- | ![screenshot](./documentation/test_reports/projects_app_linted/projects_urls_CI_linted.png) |
+| projects | projects-views.py | --- | ![screenshot](./documentation/test_reports/projects_app_linted/projects_views_CI_linted.png) |
+| tasks | tasks-forms.py | --- | ![screenshot](./documentation/test_reports/tasks_app_linted/tasks_forms_CI_linted.png) |
+| tasks | tasks-models.py | --- | ![screenshot](./documentation/test_reports/tasks_app_linted/tasks_models_CI_linted.png) |
+| tasks | tasks-test_tasks_buttons.py | --- | ![screenshot](./documentation/test_reports/tasks_app_linted/tasks_test_tasks_buttons_CI_linted.png) |
+| tasks | tasks-tests.py | --- | ![screenshot](./documentation/test_reports/tasks_app_linted/tasks_tests_CI_linted.png) |
+| tasks | tasks-urls.py | --- | ![screenshot](./documentation/test_reports/tasks_app_linted/tasks_urls_CI_linted.png) |
+| tasks | tasks-views.py | --- | ![screenshot](./documentation/test_reports/tasks_app_linted/tasks_views_CI_linted.png) |
+| users | users-backends.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_backends_CI_linted.png) |
+| users | users-forms.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_forms_CI_linted.png) |
+| users | users-test_users.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_test_users_CI_linted.png) |
+| users | users-tests.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_tests_CI_linted.png) |
+| users | users-urls.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_urls_CI_linted.png) |
+| users | users-views.py | --- | ![screenshot](./documentation/test_reports/users_app_linted/users_views_CI_linted.png) |
+
 ## Responsiveness
 
 I've tested my deployed project to check for responsiveness issues.
