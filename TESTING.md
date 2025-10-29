@@ -47,14 +47,12 @@ I used my created tests.py files to run application tests:
 - **Tasks** [tests.py](./tasks/tests.py)
 - **Users** [tests.py](./users/tests.py)
 
-# Test Reports
+## Test Reports
+
+# I have wrote separate functionality tests to test all the buttons in the project, task and user apps.
 
 **You can view the full test report here:**
 | Function Test Report | Screenshot |
 | --- | --- |
 | Html Report | ![screenshot](./documentation/test_reports/test_results_report_html_screenshots.png) |
-
-## Running Tests
-
-To run the tests I used the following command in the VSCODE terminal, while inside my project root folder:
 
