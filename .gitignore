@@ -3,4 +3,4 @@
 __pycache__/
 staticfiles/
 project_3_venv/
-
+db.sqlite3
